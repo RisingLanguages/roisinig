@@ -298,6 +298,14 @@ const ChoicePage = ({ onChoiceSelect, onBack, showCourseTypes }: ChoicePageProps
             </motion.div>
           </div>
         </div>
+        {/* Full Registration Modal */}
+        {showFullReg && (
+          <RegistrationForm type="full" onBack={() => setShowFullReg(false)} />
+        )}
+        {/* Quick Registration Modal */}
+        {showQuickReg && (
+          <RegistrationForm type="basic" onBack={() => setShowQuickReg(false)} />
+        )}
       </motion.div>
     );
   }
@@ -696,16 +704,13 @@ const ChoicePage = ({ onChoiceSelect, onBack, showCourseTypes }: ChoicePageProps
           </motion.button>
         </motion.div>
       </div>
-
       {/* Modals */}
       {showJobModal && (
         <JobApplicationModal onClose={() => setShowJobModal(false)} />
       )}
-
       {showInternModal && (
         <InternApplicationModal onClose={() => setShowInternModal(false)} />
       )}
-
       {/* Paid Registration Options Modal/Section */}
       {showPaidOptions && (
         <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4" onClick={() => setShowPaidOptions(false)}>
