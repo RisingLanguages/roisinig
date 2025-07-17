@@ -93,7 +93,6 @@ const JobApplications = () => {
       'الهاتف', 
       'البريد الإلكتروني', 
       'المنصب',
-      'التوفر',
       'الحالة', 
       'تاريخ التقديم'
     ].join(',');
@@ -104,7 +103,6 @@ const JobApplications = () => {
       `"${app.phone}"`,
       `"${app.email}"`,
       `"${app.position}"`,
-      `"${app.availability}"`,
       app.status === 'pending' ? 'قيد المراجعة' : 
         app.status === 'approved' ? 'مقبول' : 'مرفوض',
       `"${format(app.applicationDate, 'yyyy-MM-dd HH:mm', { locale: arSA })}"`
@@ -260,7 +258,6 @@ const JobApplications = () => {
                 <th className="px-4 py-3 text-right text-sm font-semibold text-gray-700">العمر</th>
                 <th className="px-4 py-3 text-right text-sm font-semibold text-gray-700">الهاتف</th>
                 <th className="px-4 py-3 text-right text-sm font-semibold text-gray-700">المنصب</th>
-                <th className="px-4 py-3 text-right text-sm font-semibold text-gray-700">التوفر</th>
                 <th className="px-4 py-3 text-right text-sm font-semibold text-gray-700">الحالة</th>
                 <th className="px-4 py-3 text-right text-sm font-semibold text-gray-700">التاريخ</th>
                 <th className="px-4 py-3 text-right text-sm font-semibold text-gray-700">الإجراءات</th>
@@ -280,7 +277,6 @@ const JobApplications = () => {
                     <td className="px-4 py-3 text-sm text-gray-800">{application.age}</td>
                     <td className="px-4 py-3 text-sm text-gray-800" dir="ltr">{application.phone}</td>
                     <td className="px-4 py-3 text-sm text-gray-800">{application.position}</td>
-                    <td className="px-4 py-3 text-sm text-gray-800">{application.availability}</td>
                     <td className="px-4 py-3 text-sm">
                       <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
                         application.status === 'pending'
@@ -350,7 +346,7 @@ const JobApplications = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan={8} className="px-4 py-8 text-center text-gray-500">
+                  <td colSpan={7} className="px-4 py-8 text-center text-gray-500">
                     <Briefcase className="w-10 h-10 mx-auto mb-2 opacity-40" />
                     <p className="text-sm">لا توجد طلبات متطابقة مع معايير البحث</p>
                   </td>
@@ -426,16 +422,6 @@ const JobApplications = () => {
                     <p className="text-sm text-gray-500">المنصب المطلوب</p>
                     <p className="font-medium">{selectedApplication.position}</p>
                   </div>
-                  <div>
-                    <p className="text-sm text-gray-500">التوفر</p>
-                    <p className="font-medium">{selectedApplication.availability}</p>
-                  </div>
-                  {selectedApplication.expectedSalary && (
-                    <div>
-                      <p className="text-sm text-gray-500">الراتب المتوقع</p>
-                      <p className="font-medium">{selectedApplication.expectedSalary}</p>
-                    </div>
-                  )}
                   <div>
                     <p className="text-sm text-gray-500">حالة الطلب</p>
                     <p className="font-medium">
