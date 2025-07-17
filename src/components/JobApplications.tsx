@@ -61,6 +61,14 @@ const JobApplications = ({ isAdmin }: JobApplicationsProps) => {
     return () => unsubscribe();
   }, [isAdmin]);
 
+    if (!isAdmin) {
+    return (
+      <div className="p-8 text-center text-gray-500">
+        ليس لديك صلاحية الوصول إلى طلبات التوظيف.
+      </div>
+    );
+  }
+
   const filteredApplications = applications.filter(app => {
     const matchesPosition = positionFilter === 'all' || app.position === positionFilter;
     const matchesSearch = !searchTerm || 
