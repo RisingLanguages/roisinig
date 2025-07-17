@@ -98,30 +98,40 @@ const AdminDashboard = () => {
     };
   }, []);
 
-  useEffect(() => {
-    let result = applications;
-    
-    if (filter !== 'all') {
-      result = result.filter(app => app.status === filter);
-    }
-    
-    if (registrationTypeFilter !== 'all') {
-      result = result.filter(app => 
-        app.registrationType?.toLowerCase() === registrationTypeFilter
-      );
-    }
-    
-    if (searchTerm) {
-      const term = searchTerm.toLowerCase();
-      result = result.filter(app => 
-        app.fullName?.toLowerCase().includes(term) ||
-        app.phone?.includes(term) ||
-        app.email?.toLowerCase().includes(term)
-      );
-    }
-    
-    setFilteredApplications(result);
-  }, [applications, filter, registrationTypeFilter, searchTerm]);
+ useEffect(() => {
+  let result = applications;
+
+  if (filter !== "all") {
+    result = result.filter((app) => app.status === filter);
+  }
+
+  if (registrationTypeFilter !== "all") {
+    result = result.filter(
+      (app) =>
+        typeof app.registrationType === "string" &&
+        app.registrationType.toLowerCase() === registrationTypeFilter
+    );
+  }
+
+  if (searchTerm) {
+    const term = searchTerm.toLowerCase();
+
+    result = result.filter((app) => {
+      const fullNameMatch =
+        typeof app.fullName === "string" &&
+        app.fullName.toLowerCase().includes(term);
+      const phoneMatch =
+        typeof app.phone === "string" && app.phone.includes(term);
+      const emailMatch =
+        typeof app.email === "string" &&
+        app.email.toLowerCase().includes(term);
+
+      return fullNameMatch || phoneMatch || emailMatch;
+    });
+  }
+
+  setFilteredApplications(result);
+}, [applications, filter, registrationTypeFilter, searchTerm]);
 
   const handleLogout = async () => {
     try {
