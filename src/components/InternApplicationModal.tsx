@@ -4,6 +4,8 @@ import { X, User, Check, GraduationCap } from 'lucide-react';
 import { addDoc, collection } from 'firebase/firestore';
 import { db } from '../firebase/config';
 import { InternApplication } from '../types';
+import SignatureCanvas from 'react-signature-canvas';
+import { useRef } from 'react';
 
 interface InternApplicationModalProps {
   onClose: () => void;
@@ -23,6 +25,8 @@ const InternApplicationModal = ({ onClose }: InternApplicationModalProps) => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'success' | 'error' | null>(null);
+  const signatureRef = useRef<SignatureCanvas>(null);
+  const [signatureError, setSignatureError] = useState(false);
 
   const departments = [
     'تطوير الويب',
@@ -40,6 +44,13 @@ const InternApplicationModal = ({ onClose }: InternApplicationModalProps) => {
     e.preventDefault();
     setIsSubmitting(true);
 
+    if (signatureRef.current && signatureRef.current.isEmpty()) {
+      setSignatureError(true);
+      setIsSubmitting(false);
+      return;
+    }
+    setSignatureError(false);
+
     try {
       const applicationData: Omit<InternApplication, 'id'> = {
         fullName: formData.fullName,
@@ -52,7 +63,8 @@ const InternApplicationModal = ({ onClose }: InternApplicationModalProps) => {
         projects: formData.projects,
         motivation: formData.motivation,
         applicationDate: new Date(),
-        status: 'pending'
+        status: 'pending',
+        signature: signatureRef.current?.getTrimmedCanvas().toDataURL() || ''
       };
 
       await addDoc(collection(db, 'internApplications'), applicationData);
@@ -314,6 +326,29 @@ const InternApplicationModal = ({ onClose }: InternApplicationModalProps) => {
                 className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300 resize-none"
                 placeholder="اكتب لماذا ترغب في هذا التدريب..."
               />
+            </div>
+
+            {/* Signature */}
+            <div className="mt-6">
+              <label className="block text-gray-800 font-semibold mb-2">
+                التوقيع <span className="text-red-500">*</span>
+              </label>
+              <div className="bg-white rounded-xl p-4 border border-gray-200">
+                <SignatureCanvas
+                  ref={signatureRef}
+                  canvasProps={{ className: 'w-full h-32 border border-gray-300 rounded-lg' }}
+                />
+                <button
+                  type="button"
+                  onClick={() => signatureRef.current?.clear()}
+                  className="mt-2 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
+                >
+                  مسح التوقيع
+                </button>
+                {signatureError && (
+                  <div className="text-red-600 mt-2 text-sm">يرجى توقيع الطلب قبل الإرسال.</div>
+                )}
+              </div>
             </div>
 
             {submitStatus === 'error' && (
