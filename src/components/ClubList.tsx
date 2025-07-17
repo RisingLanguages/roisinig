@@ -151,7 +151,7 @@ const ClubList = ({ onBack }: ClubListProps) => {
       ) : (
         <div className="text-center py-12">
           <Users className="w-16 h-16 mx-auto mb-4 text-white/50" />
-          <h3 className="text-lg font-medium text-white mb-2">لا توجد نوادي متاحة حالياً</h3>
+          <h3 className="text-lg font-medium text-white mb-2">لا يوجد نوادي حاليا</h3>
           <p className="text-white/70">سيتم إضافة نوادي جديدة قريباً</p>
         </div>
       )}
