@@ -133,7 +133,7 @@ const RegistrationForm = ({ type, onBack }: RegistrationFormProps) => {
       </motion.button>
 
       {/* Form */}
-      <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20 shadow-2xl">
+      <div className="bg-white rounded-3xl p-8 border border-white/20 shadow-2xl">
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Personal Information */}
           <div className="grid md:grid-cols-2 gap-6">
