@@ -84,7 +84,7 @@ const JobApplicationModal = ({ onClose }: JobApplicationModalProps) => {
         fullName: formData.fullName,
         age: parseInt(formData.age),
         phone: formData.phone,
-        email: formData.email,
+        email: formData.email || '',
         wilaya: formData.wilaya,
         education: formData.education,
         position,
