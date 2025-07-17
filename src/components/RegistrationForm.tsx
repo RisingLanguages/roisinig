@@ -255,10 +255,10 @@ const RegistrationForm = ({ type, onBack }: RegistrationFormProps) => {
                       />
                       <label
                         htmlFor={course.id}
-                        className={`block p-4 rounded-xl border-2 cursor-pointer transition-all duration-300 text-center ${
+                        className={`block p-4 rounded-xl border-2 cursor-pointer transition-all duration-300 text-center font-semibold text-base ${
                           selectedCourse === course.name
                             ? 'bg-[#22b0fc] border-[#22b0fc] text-white shadow-lg'
-                            : 'bg-white/10 border-white/20 text-white hover:bg-white/20'
+                            : 'bg-white border-gray-300 text-gray-800 hover:bg-blue-50 hover:border-blue-400'
                         }`}
                       >
                         <div className="font-semibold">{course.name}</div>
@@ -289,10 +289,10 @@ const RegistrationForm = ({ type, onBack }: RegistrationFormProps) => {
                       />
                       <label
                         htmlFor={course.id}
-                        className={`block p-4 rounded-xl border-2 cursor-pointer transition-all duration-300 text-center ${
+                        className={`block p-4 rounded-xl border-2 cursor-pointer transition-all duration-300 text-center font-semibold text-base ${
                           selectedCourse === course.name
                             ? 'bg-purple-500 border-purple-400 text-white shadow-lg'
-                            : 'bg-white/10 border-white/20 text-white hover:bg-white/20'
+                            : 'bg-white border-gray-300 text-gray-800 hover:bg-purple-50 hover:border-purple-400'
                         }`}
                       >
                         <div className="font-semibold">{course.name}</div>
