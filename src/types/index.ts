@@ -113,8 +113,6 @@ export interface JobApplication {
   position: string;
   experience: string;
   skills: string;
-  availability: string;
-  expectedSalary?: string;
   motivation: string;
   cvUrl?: string;
   applicationDate: Date;
