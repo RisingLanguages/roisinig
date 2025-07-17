@@ -185,7 +185,7 @@ const InternApplicationModal = ({ onClose }: InternApplicationModalProps) => {
 
                 <div>
                   <label className="block text-gray-800 font-semibold mb-2">
-                    البريد الإلكتروني <span className="text-red-500">*</span>
+                    البريد الإلكتروني
                   </label>
                   <input
                     type="email"
