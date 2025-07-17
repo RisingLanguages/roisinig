@@ -4,6 +4,9 @@ import { ArrowLeft, Calendar, Clock, Users, MapPin, User } from 'lucide-react';
 import { collection, query, where, orderBy, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase/config';
 import { Workshop } from '../types';
+import { format } from 'date-fns';
+import { arSA } from 'date-fns/locale';
+
 import WorkshopApplicationModal from './WorkshopApplicationModal';
 
 interface WorkshopListProps {
