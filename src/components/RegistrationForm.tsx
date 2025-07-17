@@ -448,7 +448,7 @@ const RegistrationForm = ({ type, onBack }: RegistrationFormProps) => {
               </div>
 
               {/* Agreement */}
-              <div className="bg-white/10 rounded-xl p-4">
+              <div className="bg-white rounded-xl p-4 mt-4">
                 <label className="flex items-start space-x-3">
                   <input
                     type="checkbox"
@@ -456,14 +456,27 @@ const RegistrationForm = ({ type, onBack }: RegistrationFormProps) => {
                     className="mt-1 w-5 h-5 text-[#22b0fc] border-gray-300 rounded focus:ring-[#22b0fc]"
                     onChange={(e) => handleInputChange('agreedToContract', e.target.checked)}
                   />
-                  <span className="text-white text-sm">
+                  <span className="text-gray-800 text-sm">
                     أوافق على شروط وأحكام الأكاديمية وسياسة الاسترداد
-                    <span className="block text-gray-300 mt-1">
+                    <span className="block text-gray-500 mt-1">
                       I agree to the academy's terms and conditions and refund policy
                     </span>
                   </span>
                 </label>
               </div>
+
+              {/* After the payment method selection, show details if Baridi Mob, CCP, or Check is selected */}
+              {['Baridi Mob', 'CCP', 'Check'].includes(selectedPaymentMethod) && (
+                <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mt-4 text-right">
+                  <h4 className="text-blue-700 font-bold mb-2">تفاصيل الدفع</h4>
+                  <ul className="text-blue-800 text-sm space-y-1">
+                    <li><span className="font-semibold">رقم CCP:</span> 00123456789 مفتاح 25</li>
+                    <li><span className="font-semibold">اسم الحساب:</span> أكاديمية رايزين</li>
+                    <li><span className="font-semibold">يرجى إرسال وصل الدفع على واتساب:</span> 0555 123 456</li>
+                    <li><span className="font-semibold">ملاحظة:</span> سيتم تأكيد تسجيلك بعد استلام إثبات الدفع.</li>
+                  </ul>
+                </div>
+              )}
             </motion.div>
           )}
 
