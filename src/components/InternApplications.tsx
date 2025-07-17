@@ -61,7 +61,6 @@ const InternApplications = () => {
       app.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       app.phone.includes(searchTerm) ||
       app.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      app.university.toLowerCase().includes(searchTerm.toLowerCase()) ||
       app.major.toLowerCase().includes(searchTerm.toLowerCase());
     
     return matchesDepartment && matchesSearch;
@@ -220,7 +219,7 @@ const InternApplications = () => {
             <div className="relative">
               <input
                 type="text"
-                placeholder="ابحث بالاسم أو الهاتف أو البريد أو الجامعة..."
+                placeholder="ابحث بالاسم أو الهاتف أو البريد أو التخصص..."
                 className="w-full pr-10 pl-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22b0fc] focus:border-[#22b0fc] outline-none"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
