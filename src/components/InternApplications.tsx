@@ -93,10 +93,8 @@ const InternApplications = () => {
       'العمر', 
       'الهاتف', 
       'البريد الإلكتروني', 
-      'الجامعة',
       'التخصص',
       'القسم',
-      'المدة',
       'الحالة', 
       'تاريخ التقديم'
     ].join(',');
@@ -106,10 +104,8 @@ const InternApplications = () => {
       `"${app.age}"`,
       `"${app.phone}"`,
       `"${app.email}"`,
-      `"${app.university}"`,
       `"${app.major}"`,
       `"${app.department}"`,
-      `"${app.duration}"`,
       app.status === 'pending' ? 'قيد المراجعة' : 
         app.status === 'approved' ? 'مقبول' : 'مرفوض',
       `"${format(app.applicationDate, 'yyyy-MM-dd HH:mm', { locale: arSA })}"`
@@ -263,10 +259,8 @@ const InternApplications = () => {
               <tr>
                 <th className="px-4 py-3 text-right text-sm font-semibold text-gray-700">الاسم</th>
                 <th className="px-4 py-3 text-right text-sm font-semibold text-gray-700">العمر</th>
-                <th className="px-4 py-3 text-right text-sm font-semibold text-gray-700">الجامعة</th>
                 <th className="px-4 py-3 text-right text-sm font-semibold text-gray-700">التخصص</th>
                 <th className="px-4 py-3 text-right text-sm font-semibold text-gray-700">القسم</th>
-                <th className="px-4 py-3 text-right text-sm font-semibold text-gray-700">المدة</th>
                 <th className="px-4 py-3 text-right text-sm font-semibold text-gray-700">الحالة</th>
                 <th className="px-4 py-3 text-right text-sm font-semibold text-gray-700">التاريخ</th>
                 <th className="px-4 py-3 text-right text-sm font-semibold text-gray-700">الإجراءات</th>
@@ -284,10 +278,8 @@ const InternApplications = () => {
                   >
                     <td className="px-4 py-3 text-sm text-gray-800 font-medium">{application.fullName}</td>
                     <td className="px-4 py-3 text-sm text-gray-800">{application.age}</td>
-                    <td className="px-4 py-3 text-sm text-gray-800">{application.university}</td>
                     <td className="px-4 py-3 text-sm text-gray-800">{application.major}</td>
                     <td className="px-4 py-3 text-sm text-gray-800">{application.department}</td>
-                    <td className="px-4 py-3 text-sm text-gray-800">{application.duration}</td>
                     <td className="px-4 py-3 text-sm">
                       <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
                         application.status === 'pending'
@@ -357,7 +349,7 @@ const InternApplications = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan={9} className="px-4 py-8 text-center text-gray-500">
+                  <td colSpan={8} className="px-4 py-8 text-center text-gray-500">
                     <GraduationCap className="w-10 h-10 mx-auto mb-2 opacity-40" />
                     <p className="text-sm">لا توجد طلبات متطابقة مع معايير البحث</p>
                   </td>
@@ -426,23 +418,9 @@ const InternApplications = () => {
                 <h3 className="font-semibold text-gray-700 mb-3">المعلومات الأكاديمية</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <p className="text-sm text-gray-500">الجامعة</p>
-                    <p className="font-medium">{selectedApplication.university}</p>
-                  </div>
-                  <div>
                     <p className="text-sm text-gray-500">التخصص</p>
                     <p className="font-medium">{selectedApplication.major}</p>
                   </div>
-                  <div>
-                    <p className="text-sm text-gray-500">السنة الدراسية</p>
-                    <p className="font-medium">{selectedApplication.year}</p>
-                  </div>
-                  {selectedApplication.gpa && (
-                    <div>
-                      <p className="text-sm text-gray-500">المعدل العام</p>
-                      <p className="font-medium">{selectedApplication.gpa}</p>
-                    </div>
-                  )}
                 </div>
               </div>
 
@@ -453,36 +431,6 @@ const InternApplications = () => {
                   <div>
                     <p className="text-sm text-gray-500">القسم المطلوب</p>
                     <p className="font-medium">{selectedApplication.department}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-500">مدة التدريب</p>
-                    <p className="font-medium">{selectedApplication.duration}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-500">تاريخ البدء المفضل</p>
-                    <p className="font-medium">{selectedApplication.startDate}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-500">التوفر</p>
-                    <p className="font-medium">{selectedApplication.availability}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-500">حالة الطلب</p>
-                    <p className="font-medium">
-                      <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                        selectedApplication.status === 'pending'
-                          ? 'bg-yellow-100 text-yellow-800'
-                          : selectedApplication.status === 'approved'
-                            ? 'bg-green-100 text-green-800'
-                            : 'bg-red-100 text-red-800'
-                      }`}>
-                        {selectedApplication.status === 'pending' 
-                          ? 'قيد المراجعة' 
-                          : selectedApplication.status === 'approved' 
-                            ? 'مقبول' 
-                            : 'مرفوض'}
-                      </span>
-                    </p>
                   </div>
                   <div>
                     <p className="text-sm text-gray-500">تاريخ التقديم</p>
