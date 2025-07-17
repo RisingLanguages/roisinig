@@ -133,24 +133,24 @@ const RegistrationForm = ({ type, onBack }: RegistrationFormProps) => {
       </motion.button>
 
       {/* Form */}
-      <div className="bg-white rounded-3xl p-8 border border-white/20 shadow-2xl">
+      <div className="bg-white rounded-3xl p-8 border border-gray-200 shadow-2xl">
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Personal Information */}
           <div className="grid md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-white font-semibold mb-2">
+              <label className="block text-gray-800 font-semibold mb-2">
                 الاسم الكامل <span className="text-sm text-gray-300">Full Name</span>
               </label>
               <input
                 type="text"
                 required
-                className="w-full px-4 py-3 rounded-xl bg-white/20 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-[#22b0fc] transition-all duration-300"
+                className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#22b0fc] transition-all duration-300"
                 placeholder="أدخل اسمك الكامل"
                 onChange={(e) => handleInputChange('fullName', e.target.value)}
               />
             </div>
             <div>
-              <label className="block text-white font-semibold mb-2">
+              <label className="block text-gray-800 font-semibold mb-2">
                 العمر <span className="text-sm text-gray-300">Age</span>
               </label>
               <input
@@ -158,7 +158,7 @@ const RegistrationForm = ({ type, onBack }: RegistrationFormProps) => {
                 min="16"
                 max="65"
                 required
-                className="w-full px-4 py-3 rounded-xl bg-white/20 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-[#22b0fc] transition-all duration-300"
+                className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#22b0fc] transition-all duration-300"
                 placeholder="العمر"
                 onChange={(e) => handleInputChange('age', parseInt(e.target.value))}
               />
@@ -167,24 +167,24 @@ const RegistrationForm = ({ type, onBack }: RegistrationFormProps) => {
 
           <div className="grid md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-white font-semibold mb-2">
+              <label className="block text-gray-800 font-semibold mb-2">
                 رقم الهاتف <span className="text-sm text-gray-300">Phone</span>
               </label>
               <input
                 type="tel"
                 required
-                className="w-full px-4 py-3 rounded-xl bg-white/20 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-[#22b0fc] transition-all duration-300"
+                className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#22b0fc] transition-all duration-300"
                 placeholder="0555 123 456"
                 onChange={(e) => handleInputChange('phone', e.target.value)}
               />
             </div>
             <div>
-              <label className="block text-white font-semibold mb-2">
+              <label className="block text-gray-800 font-semibold mb-2">
                 البريد الإلكتروني (اختياري) <span className="text-sm text-gray-300">Email</span>
               </label>
               <input
                 type="email"
-                className="w-full px-4 py-3 rounded-xl bg-white/20 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-[#22b0fc] transition-all duration-300"
+                className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#22b0fc] transition-all duration-300"
                 placeholder="example@email.com"
                 onChange={(e) => handleInputChange('email', e.target.value)}
               />
@@ -193,12 +193,12 @@ const RegistrationForm = ({ type, onBack }: RegistrationFormProps) => {
 
           <div className="grid md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-white font-semibold mb-2">
+              <label className="block text-gray-800 font-semibold mb-2">
                 الولاية <span className="text-sm text-gray-300">Wilaya</span>
               </label>
               <select
                 required
-                className="w-full px-4 py-3 rounded-xl bg-white/20 border border-white/30 text-white focus:outline-none focus:ring-2 focus:ring-[#22b0fc] transition-all duration-300"
+                className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#22b0fc] transition-all duration-300"
                 onChange={(e) => handleInputChange('wilaya', e.target.value)}
               >
                 <option value="">اختر الولاية</option>
@@ -210,12 +210,12 @@ const RegistrationForm = ({ type, onBack }: RegistrationFormProps) => {
               </select>
             </div>
             <div>
-              <label className="block text-white font-semibold mb-2">
+              <label className="block text-gray-800 font-semibold mb-2">
                 المستوى التعليمي <span className="text-sm text-gray-300">Education</span>
               </label>
               <select
                 required
-                className="w-full px-4 py-3 rounded-xl bg-white/20 border border-white/30 text-white focus:outline-none focus:ring-2 focus:ring-[#22b0fc] transition-all duration-300"
+                className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#22b0fc] transition-all duration-300"
                 onChange={(e) => handleInputChange('education', e.target.value)}
               >
                 <option value="">اختر المستوى التعليمي</option>
@@ -230,7 +230,7 @@ const RegistrationForm = ({ type, onBack }: RegistrationFormProps) => {
 
           {/* Course Selection */}
           <div>
-            <label className="block text-white font-semibold mb-4">
+            <label className="block text-gray-800 font-semibold mb-4">
               الدورة المطلوبة <span className="text-sm text-gray-300">Course Selection</span>
             </label>
             
@@ -308,23 +308,23 @@ const RegistrationForm = ({ type, onBack }: RegistrationFormProps) => {
           {/* Optional Fields */}
           <div className="grid md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-white font-semibold mb-2">
+              <label className="block text-gray-800 font-semibold mb-2">
                 الخبرة السابقة (اختياري) <span className="text-sm text-gray-300">Experience</span>
               </label>
               <textarea
                 rows={4}
-                className="w-full px-4 py-3 rounded-xl bg-white/20 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-[#22b0fc] transition-all duration-300 resize-none"
+                className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#22b0fc] transition-all duration-300 resize-none"
                 placeholder="اكتب عن خبرتك السابقة..."
                 onChange={(e) => handleInputChange('experience', e.target.value)}
               />
             </div>
             <div>
-              <label className="block text-white font-semibold mb-2">
+              <label className="block text-gray-800 font-semibold mb-2">
                 ملاحظات أو استفسارات (اختياري) <span className="text-sm text-gray-300">Comments</span>
               </label>
               <textarea
                 rows={4}
-                className="w-full px-4 py-3 rounded-xl bg-white/20 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-[#22b0fc] transition-all duration-300 resize-none"
+                className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#22b0fc] transition-all duration-300 resize-none"
                 placeholder="أي استفسارات أو ملاحظات؟"
                 onChange={(e) => handleInputChange('comments', e.target.value)}
               />
@@ -343,28 +343,28 @@ const RegistrationForm = ({ type, onBack }: RegistrationFormProps) => {
               
               {/* ID Photos */}
               <div>
-                <label className="block text-white font-semibold mb-4">
+                <label className="block text-gray-800 font-semibold mb-4">
                   صور بطاقة الهوية <span className="text-sm text-gray-300">ID Card Photos</span>
                 </label>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-white mb-2">الوجه الأمامي</label>
+                    <label className="block text-gray-800 mb-2">الوجه الأمامي</label>
                     <input
                       type="file"
                       id="idFront"
                       accept="image/*"
                       required
-                      className="w-full px-4 py-3 rounded-xl bg-white/20 border border-white/30 text-white file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-[#22b0fc] file:text-white"
+                      className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 text-gray-800 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-[#22b0fc] file:text-white"
                     />
                   </div>
                   <div>
-                    <label className="block text-white mb-2">الوجه الخلفي</label>
+                    <label className="block text-gray-800 mb-2">الوجه الخلفي</label>
                     <input
                       type="file"
                       id="idBack"
                       accept="image/*"
                       required
-                      className="w-full px-4 py-3 rounded-xl bg-white/20 border border-white/30 text-white file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-[#22b0fc] file:text-white"
+                      className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 text-gray-800 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-[#22b0fc] file:text-white"
                     />
                   </div>
                 </div>
@@ -372,7 +372,7 @@ const RegistrationForm = ({ type, onBack }: RegistrationFormProps) => {
 
               {/* Payment Method */}
               <div>
-                <label className="block text-white font-semibold mb-4">
+                <label className="block text-gray-800 font-semibold mb-4">
                   طريقة الدفع <span className="text-sm text-gray-300">Payment Method</span>
                 </label>
                 <div className="grid grid-cols-3 gap-4">
@@ -413,7 +413,7 @@ const RegistrationForm = ({ type, onBack }: RegistrationFormProps) => {
 
               {/* Payment Proof */}
               <div>
-                <label className="block text-white font-semibold mb-2">
+                <label className="block text-gray-800 font-semibold mb-2">
                   إثبات الدفع <span className="text-sm text-gray-300">Payment Proof</span>
                 </label>
                 <input
@@ -421,13 +421,13 @@ const RegistrationForm = ({ type, onBack }: RegistrationFormProps) => {
                   id="paymentProof"
                   accept="image/*"
                   required
-                  className="w-full px-4 py-3 rounded-xl bg-white/20 border border-white/30 text-white file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-green-500 file:text-white"
+                  className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 text-gray-800 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-green-500 file:text-white"
                 />
               </div>
 
               {/* Signature */}
               <div>
-                <label className="block text-white font-semibold mb-2">
+                <label className="block text-gray-800 font-semibold mb-2">
                   التوقيع <span className="text-sm text-gray-300">Signature</span>
                 </label>
                 <div className="bg-white rounded-xl p-4">
