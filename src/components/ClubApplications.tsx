@@ -23,6 +23,9 @@ import {
 } from 'firebase/firestore';
 import { db } from '../firebase/config';
 import { ClubApplication, Club } from '../types';
+import { format } from 'date-fns';
+import { arSA } from 'date-fns/locale';
+
 
 
 const ClubApplications = () => {
