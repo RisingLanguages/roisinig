@@ -701,18 +701,26 @@ const ChoicePage = ({ onChoiceSelect, onBack, showCourseTypes }: ChoicePageProps
       {showPaidOptions && (
         <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4" onClick={() => setShowPaidOptions(false)}>
           <div className="bg-white rounded-2xl p-8 max-w-md w-full shadow-xl relative" onClick={e => e.stopPropagation()}>
-            <button className="absolute top-3 left-3 text-gray-400 hover:text-gray-700" onClick={() => setShowPaidOptions(false)}>&times;</button>
+            <button className="absolute top-3 left-3 text-gray-400 hover:text-gray-700" onClick={() => setShowPaidOptions(false)}>
+              &times;
+            </button>
             <h2 className="text-2xl font-bold text-center mb-6 text-blue-700">اختر نوع التسجيل</h2>
             <div className="flex flex-col gap-4">
               <button
                 className="w-full py-4 rounded-xl font-bold text-lg bg-gradient-to-r from-green-500 to-emerald-500 text-white hover:from-green-600 hover:to-emerald-600 shadow-lg transition-all duration-300"
-                onClick={() => { setShowFullReg(true); setShowPaidOptions(false); }}
+                onClick={() => {
+                  setShowPaidOptions(false);
+                  setShowFullReg(true); // Show full registration form
+                }}
               >
                 تسجيل كلي
               </button>
               <button
                 className="w-full py-4 rounded-xl font-bold text-lg bg-gradient-to-r from-blue-500 to-cyan-500 text-white hover:from-blue-600 hover:to-cyan-600 shadow-lg transition-all duration-300"
-                onClick={() => { setShowQuickReg(true); setShowPaidOptions(false); }}
+                onClick={() => {
+                  setShowPaidOptions(false);
+                  setShowQuickReg(true); // Show quick registration form
+                }}
               >
                 تسجيل أولي سريع
               </button>
@@ -722,10 +730,22 @@ const ChoicePage = ({ onChoiceSelect, onBack, showCourseTypes }: ChoicePageProps
       )}
       {/* Registration Modals (always rendered) */}
       {showFullReg && (
-        <RegistrationForm type="full" onBack={() => setShowFullReg(false)} />
+        <RegistrationForm 
+          type="full" 
+          onBack={() => {
+            setShowFullReg(false);
+            setShowPaidOptions(true); // Show the options again when going back
+          }} 
+        />
       )}
       {showQuickReg && (
-        <RegistrationForm type="basic" onBack={() => setShowQuickReg(false)} />
+        <RegistrationForm 
+          type="basic" 
+          onBack={() => {
+            setShowQuickReg(false);
+            setShowPaidOptions(true); // Show the options again when going back
+          }}
+        />
       )}
     </>
   );
