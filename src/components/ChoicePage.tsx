@@ -7,7 +7,7 @@ import JobApplicationModal from './JobApplicationModal';
 import InternApplicationModal from './InternApplicationModal';
 import RegistrationForm from './RegistrationForm';
 import { collection, addDoc } from 'firebase/firestore';
-import { db } from '../firebase';
+import { db } from './firebase';
 
 interface ChoicePageProps {
   onChoiceSelect: (type: 'internapplication' | 'courses' | 'workshops' | 'clubs' | 'jobs' | 'admin' | 'basic' | 'full') => void;
