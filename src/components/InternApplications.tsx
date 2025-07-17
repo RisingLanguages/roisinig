@@ -23,8 +23,7 @@ import {
 } from 'firebase/firestore';
 import { db } from '../firebase/config';
 import { InternApplication } from '../types';
-import { format } from 'date-fns';
-import { arSA } from 'date-fns/locale';
+
 
 const InternApplications = () => {
   const [applications, setApplications] = useState<InternApplication[]>([]);
