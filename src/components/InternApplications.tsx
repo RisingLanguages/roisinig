@@ -23,6 +23,10 @@ import {
 } from 'firebase/firestore';
 import { db } from '../firebase/config';
 import { InternApplication } from '../types';
+// ... existing code ...
+import { format } from 'date-fns';
+import { arSA } from 'date-fns/locale';
+// ... existing code ...
 
 
 const InternApplications = () => {
