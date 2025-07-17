@@ -304,15 +304,15 @@ const InternApplicationModal = ({ onClose }: InternApplicationModalProps) => {
             {/* Motivation */}
             <div>
               <label className="block text-gray-800 font-semibold mb-2">
-                لماذا تريد التدريب معنا؟ <span className="text-red-500">*</span>
+                الدافع للتدريب <span className="text-red-500">*</span>
               </label>
               <textarea
                 required
-                rows={4}
+                rows={3}
                 value={formData.motivation}
                 onChange={(e) => setFormData(prev => ({ ...prev, motivation: e.target.value }))}
                 className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300 resize-none"
-                placeholder="اكتب عن دوافعك للتدريب في أكاديمية رايزين..."
+                placeholder="اكتب لماذا ترغب في هذا التدريب..."
               />
             </div>
 
