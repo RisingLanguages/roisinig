@@ -27,8 +27,13 @@ const ChoicePage = ({ onChoiceSelect, onBack, showCourseTypes }: ChoicePageProps
       setShowWorkshops(true);
     } else if (service === 'clubs') {
       setShowClubs(true);
-    } else if (service === 'jobs') {
-      setShowJobModal(true);
+    } // In your ChoicePage component, ensure the job application click handler is simple:
+const handleServiceSelect = (service: string) => {
+  if (service === 'jobs') {
+    setShowJobModal(true); // Directly show the form
+  }
+  // ... other cases
+};
     } else if (service === 'internapplication') {
       setShowInternModal(true);
     } else if (service === 'courses') {
