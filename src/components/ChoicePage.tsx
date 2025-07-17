@@ -5,6 +5,7 @@ import WorkshopList from './WorkshopList';
 import ClubList from './ClubList';
 import JobApplicationModal from './JobApplicationModal';
 import InternApplicationModal from './InternApplicationModal';
+import RegistrationForm from './RegistrationForm';
 
 interface ChoicePageProps {
   onChoiceSelect: (type: 'internapplication' | 'courses' | 'workshops' | 'clubs' | 'jobs' | 'admin' | 'basic' | 'full') => void;
@@ -17,6 +18,9 @@ const ChoicePage = ({ onChoiceSelect, onBack, showCourseTypes }: ChoicePageProps
   const [showClubs, setShowClubs] = useState(false);
   const [showJobModal, setShowJobModal] = useState(false);
   const [showInternModal, setShowInternModal] = useState(false);
+  const [showPaidOptions, setShowPaidOptions] = useState(false); // NEW
+  const [showFullReg, setShowFullReg] = useState(false); // NEW
+  const [showQuickReg, setShowQuickReg] = useState(false); // NEW
 
   if (showCourseTypes) {
     return (
@@ -317,6 +321,8 @@ const ChoicePage = ({ onChoiceSelect, onBack, showCourseTypes }: ChoicePageProps
       setShowJobModal(true);
     } else if (service === 'internapplication') {
       setShowInternModal(true);
+    } else if (service === 'courses') {
+      setShowPaidOptions(true); // Show paid options modal/section
     } else {
       onChoiceSelect(service as any);
     }
@@ -698,6 +704,38 @@ const ChoicePage = ({ onChoiceSelect, onBack, showCourseTypes }: ChoicePageProps
 
       {showInternModal && (
         <InternApplicationModal onClose={() => setShowInternModal(false)} />
+      )}
+
+      {/* Paid Registration Options Modal/Section */}
+      {showPaidOptions && (
+        <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4" onClick={() => setShowPaidOptions(false)}>
+          <div className="bg-white rounded-2xl p-8 max-w-md w-full shadow-xl relative" onClick={e => e.stopPropagation()}>
+            <button className="absolute top-3 left-3 text-gray-400 hover:text-gray-700" onClick={() => setShowPaidOptions(false)}>&times;</button>
+            <h2 className="text-2xl font-bold text-center mb-6 text-blue-700">اختر نوع التسجيل</h2>
+            <div className="flex flex-col gap-4">
+              <button
+                className="w-full py-4 rounded-xl font-bold text-lg bg-gradient-to-r from-green-500 to-emerald-500 text-white hover:from-green-600 hover:to-emerald-600 shadow-lg transition-all duration-300"
+                onClick={() => { setShowFullReg(true); setShowPaidOptions(false); }}
+              >
+                تسجيل كلي
+              </button>
+              <button
+                className="w-full py-4 rounded-xl font-bold text-lg bg-gradient-to-r from-blue-500 to-cyan-500 text-white hover:from-blue-600 hover:to-cyan-600 shadow-lg transition-all duration-300"
+                onClick={() => { setShowQuickReg(true); setShowPaidOptions(false); }}
+              >
+                تسجيل أولي سريع
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Full Registration Modal */}
+      {showFullReg && (
+        <RegistrationForm type="full" onBack={() => setShowFullReg(false)} />
+      )}
+      {/* Quick Registration Modal */}
+      {showQuickReg && (
+        <RegistrationForm type="basic" onBack={() => setShowQuickReg(false)} />
       )}
     </motion.div>
   );
