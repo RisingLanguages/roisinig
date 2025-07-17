@@ -405,13 +405,12 @@ const RegistrationForm = ({ type, onBack }: RegistrationFormProps) => {
                       >
                         <div className="text-2xl mb-2">{method.icon}</div>
                         <div className="font-semibold text-gray-800">
-                          {method.name === 'Baridi Mob' ? 'بريدي موب (Baridi Mob)' :
-                           method.name === 'CCP' ? 'حوالة بريدية CCP' :
-                           method.name === 'Check' ? 'شيك بنكي (Check)' :
+                          {method.name.toLowerCase().includes('baridi') ? 'بريدي موب (Baridi Mob)' :
+                           method.name.toLowerCase().includes('ccp') ? 'حوالة بريدية CCP' :
+                           method.name.toLowerCase().includes('check') ? 'شيك بنكي (Check)' :
                            method.name}
                         </div>
-                        {/* Show details inside the selected card */}
-                        {selectedPaymentMethod === method.name && method.name === 'Baridi Mob' && (
+                        {selectedPaymentMethod && selectedPaymentMethod.toLowerCase().includes('baridi') && method.name === selectedPaymentMethod && (
                           <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 mt-3 text-right text-blue-800">
                             <div className="font-bold text-blue-700 mb-1">تفاصيل الدفع عبر بريدي موب:</div>
                             <ul className="text-sm space-y-1">
@@ -422,7 +421,7 @@ const RegistrationForm = ({ type, onBack }: RegistrationFormProps) => {
                             </ul>
                           </div>
                         )}
-                        {selectedPaymentMethod === method.name && method.name === 'CCP' && (
+                        {selectedPaymentMethod && selectedPaymentMethod.toLowerCase().includes('ccp') && method.name === selectedPaymentMethod && (
                           <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 mt-3 text-right text-blue-800">
                             <div className="font-bold text-blue-700 mb-1">تفاصيل الدفع عبر CCP:</div>
                             <ul className="text-sm space-y-1">
@@ -433,7 +432,7 @@ const RegistrationForm = ({ type, onBack }: RegistrationFormProps) => {
                             </ul>
                           </div>
                         )}
-                        {selectedPaymentMethod === method.name && method.name === 'Check' && (
+                        {selectedPaymentMethod && selectedPaymentMethod.toLowerCase().includes('check') && method.name === selectedPaymentMethod && (
                           <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 mt-3 text-right text-blue-800">
                             <div className="font-bold text-blue-700 mb-1">تفاصيل الدفع عبر شيك بنكي:</div>
                             <ul className="text-sm space-y-1">
