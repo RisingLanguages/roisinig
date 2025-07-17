@@ -165,7 +165,7 @@ const ChoicePage = ({ onChoiceSelect, onBack, showCourseTypes }: ChoicePageProps
                   boxShadow: "0 25px 50px -12px rgba(34, 176, 252, 0.25)"
                 }}
                 className="group cursor-pointer"
-                onClick={() => onChoiceSelect('basic')}
+                onClick={() => setShowQuickReg(true)}
               >
                 <div className="bg-white rounded-3xl p-8 shadow-2xl hover:shadow-[#22b0fc]/25 transition-all duration-500 relative overflow-hidden border border-gray-100 hover:border-[#22b0fc]/20">
                   <div className="absolute inset-0 bg-gradient-to-br from-[#22b0fc]/5 to-cyan-500/5 group-hover:from-[#22b0fc]/10 group-hover:to-cyan-500/10 transition-all duration-500"></div>
@@ -250,7 +250,7 @@ const ChoicePage = ({ onChoiceSelect, onBack, showCourseTypes }: ChoicePageProps
                   boxShadow: "0 25px 50px -12px rgba(16, 185, 129, 0.25)"
                 }}
                 className="group cursor-pointer"
-                onClick={() => onChoiceSelect('full')}
+                onClick={() => setShowFullReg(true)}
               >
                 <div className="bg-white rounded-3xl p-8 shadow-2xl hover:shadow-green-500/25 transition-all duration-500 relative overflow-hidden border border-gray-100 hover:border-green-500/20">
                   <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 to-emerald-500/5 group-hover:from-green-500/10 group-hover:to-emerald-500/10 transition-all duration-500"></div>
