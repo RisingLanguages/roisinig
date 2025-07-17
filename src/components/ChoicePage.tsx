@@ -602,7 +602,7 @@ const ChoicePage = ({ onChoiceSelect, onBack, showCourseTypes }: ChoicePageProps
                 transition={{ delay: 1.1, duration: 0.6 }}
                 whileHover={{ scale: 1.05, rotateY: -5 }}
                 className="group cursor-pointer"
-                onClick={() => handleServiceSelect('jobs')}
+                onClick={() => setShowJobModal(true)}
               >
                 <div className="bg-white rounded-3xl p-8 shadow-2xl hover:shadow-green-500/25 transition-all duration-500 relative overflow-hidden h-full">
                   <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 to-emerald-500/5 group-hover:from-green-500/10 group-hover:to-emerald-500/10 transition-all duration-500"></div>
