@@ -40,6 +40,8 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { auth, db } from '../firebase/config';
 import { Application } from '../types';
 
+import { format } from 'date-fns';
+import { arSA } from 'date-fns/locale';
 
 import WorkshopManagement from './WorkshopManagement';
 import WorkshopApplications from './WorkshopList';
@@ -48,6 +50,33 @@ import ClubApplications from './ClubApplications';
 import StatisticsPanel from './StatisticsPanel';
 import JobApplications from './JobApplications';
 import InternApplications from './InternApplications';
+
+import React from 'react';
+
+class ErrorBoundary extends React.Component<{children: React.ReactNode}, {hasError: boolean, error: any}> {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+  componentDidCatch(error, errorInfo) {
+    // You can log errorInfo here if needed
+  }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{ padding: 40, textAlign: 'center', color: '#b91c1c', background: '#fff' }}>
+          <h1 style={{ fontSize: 32, marginBottom: 16 }}>حدث خطأ في لوحة التحكم</h1>
+          <p style={{ fontSize: 18 }}>يرجى إعادة تحميل الصفحة أو التواصل مع الدعم الفني.</p>
+          <pre style={{ color: '#991b1b', marginTop: 24, direction: 'ltr', textAlign: 'left', background: '#fee2e2', padding: 16, borderRadius: 8, overflowX: 'auto' }}>{String(this.state.error)}</pre>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 const AdminDashboard = () => {
   const [applications, setApplications] = useState<Application[]>([]);
@@ -924,4 +953,6 @@ const AdminDashboard = () => {
   );
 };
 
-export default AdminDashboard;
+export default function AdminDashboardWithBoundary(props) {
+  return <ErrorBoundary><AdminDashboard {...props} /></ErrorBoundary>;
+}
