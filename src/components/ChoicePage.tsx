@@ -337,19 +337,19 @@ const ChoicePage = ({ onChoiceSelect, onBack, showCourseTypes }: ChoicePageProps
           animate={{ opacity: 1, y: 0 }}
           className="mb-8 flex justify-center"
         >
-          <motion.div
-            whileHover={{ scale: 1.04 }}
+          <motion.button
+            whileHover={{ scale: 1.05, backgroundColor: '#e0f2ff', borderColor: '#2563eb' }}
             whileTap={{ scale: 0.98 }}
             onClick={() => onChoiceSelect('basic')}
-            className="cursor-pointer bg-white border-4 border-blue-400 shadow-2xl rounded-3xl p-8 flex flex-col items-center max-w-md w-full transition-all duration-300 hover:border-blue-500 hover:shadow-blue-200/50"
+            className="cursor-pointer bg-white border-2 border-blue-500 shadow-xl rounded-2xl px-8 py-6 flex flex-col items-center max-w-md w-full transition-all duration-300 hover:bg-blue-50 hover:border-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-200 group"
             style={{ zIndex: 2 }}
           >
-            <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-2xl flex items-center justify-center mb-4 shadow-lg">
-              <GraduationCap className="w-10 h-10 text-white" />
+            <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-xl flex items-center justify-center mb-3 shadow-md group-hover:from-blue-600 group-hover:to-cyan-500">
+              <GraduationCap className="w-8 h-8 text-white" />
             </div>
-            <h2 className="text-2xl font-extrabold text-blue-700 mb-2">تسجيل سريع - دورة أولية</h2>
-            <p className="text-blue-500 text-lg mb-2 font-semibold">اضغط هنا للتسجيل السريع في الدورات الأولية بسهولة!</p>
-          </motion.div>
+            <span className="text-xl font-extrabold text-blue-700 mb-1">تسجـيل سريـع في الدورات</span>
+            <span className="text-blue-600 text-base font-semibold mb-1">اضغط هنا للتسجيل السريع في الدورات بسهولة!</span>
+          </motion.button>
         </motion.div>
 
         {/* Logo and Header */}
