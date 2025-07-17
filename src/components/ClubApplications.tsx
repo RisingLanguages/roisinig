@@ -23,8 +23,7 @@ import {
 } from 'firebase/firestore';
 import { db } from '../firebase/config';
 import { ClubApplication, Club } from '../types';
-import format from 'date-fns/format';
-import arSA from 'date-fns/locale/ar-SA';
+
 
 const ClubApplications = () => {
   const [applications, setApplications] = useState<ClubApplication[]>([]);
