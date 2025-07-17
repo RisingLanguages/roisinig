@@ -335,17 +335,21 @@ const ChoicePage = ({ onChoiceSelect, onBack, showCourseTypes }: ChoicePageProps
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-8 text-center"
+          className="mb-8 flex justify-center"
         >
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+          <motion.div
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.98 }}
             onClick={() => onChoiceSelect('basic')}
-            className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 flex items-center mx-auto"
+            className="cursor-pointer bg-white border-4 border-blue-400 shadow-2xl rounded-3xl p-8 flex flex-col items-center max-w-md w-full transition-all duration-300 hover:border-blue-500 hover:shadow-blue-200/50"
+            style={{ zIndex: 2 }}
           >
-            <GraduationCap className="w-6 h-6 ml-3" />
-            تسجيل سريع - دورة أولية
-          </motion.button>
+            <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-2xl flex items-center justify-center mb-4 shadow-lg">
+              <GraduationCap className="w-10 h-10 text-white" />
+            </div>
+            <h2 className="text-2xl font-extrabold text-blue-700 mb-2">تسجيل سريع - دورة أولية</h2>
+            <p className="text-blue-500 text-lg mb-2 font-semibold">اضغط هنا للتسجيل السريع في الدورات الأولية بسهولة!</p>
+          </motion.div>
         </motion.div>
 
         {/* Logo and Header */}
