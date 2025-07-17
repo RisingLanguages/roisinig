@@ -204,6 +204,17 @@ const ChoicePage = ({ onChoiceSelect, onBack, showCourseTypes }: ChoicePageProps
                     <Sparkles className="w-4 h-4 ml-2" />
                     مجاني ومرن
                   </motion.div>
+
+                  {/* Quick Access Button for Basic Registration */}
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => onChoiceSelect('basic')}
+                    className="mt-6 bg-white text-blue-600 px-6 py-3 rounded-2xl font-bold text-lg shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 flex items-center mx-auto"
+                  >
+                    <GraduationCap className="w-6 h-6 mr-3" />
+                    تسجيل سريع - دورة أولية
+                  </motion.button>
                 </div>
               </div>
             </motion.div>
