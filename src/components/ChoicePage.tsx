@@ -690,7 +690,7 @@ const ChoicePage = ({ onChoiceSelect, onBack, showCourseTypes }: ChoicePageProps
                     </div>
                     <h3 className="text-3xl font-bold text-gray-800 mb-4">The Office Club</h3>
                     <p className="text-gray-600 text-lg mb-6">
-                      انضم إلى نادي The Office وطور مهاراتك الإدارية واللغوية
+                      انضم إلى نادي The Office وطور مهاراتك اللغوية
                     </p>
                     <ul className="space-y-2 text-gray-700">
                       <li className="flex items-center">
