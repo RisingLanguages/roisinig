@@ -214,7 +214,6 @@ const JobApplicationModal = ({ onClose }: JobApplicationModalProps) => {
                   </label>
                   <input
                     type="email"
-                    required
                     value={formData.email}
                     onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
                     className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-300"
@@ -294,19 +293,6 @@ const JobApplicationModal = ({ onClose }: JobApplicationModalProps) => {
                     <option value="عن بعد">عن بعد</option>
                   </select>
                 </div>
-              </div>
-
-              <div className="mt-4">
-                <label className="block text-gray-800 font-semibold mb-2">
-                  الراتب المتوقع (اختياري)
-                </label>
-                <input
-                  type="text"
-                  value={formData.expectedSalary}
-                  onChange={(e) => setFormData(prev => ({ ...prev, expectedSalary: e.target.value }))}
-                  className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-300"
-                  placeholder="مثال: 50,000 دج شهرياً"
-                />
               </div>
             </div>
 
