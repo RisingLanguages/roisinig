@@ -50,6 +50,7 @@ import ClubApplications from './ClubApplications';
 import StatisticsPanel from './StatisticsPanel';
 import JobApplications from './JobApplications';
 import InternApplications from './InternApplications';
+import TheOfficeApplications from './TheOfficeApplications';
 
 import React from 'react';
 
@@ -86,7 +87,7 @@ const AdminDashboard = () => {
   const [selectedApplication, setSelectedApplication] = useState<Application | null>(null);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  const [activeTab, setActiveTab] = useState<'applications' | 'workshops' | 'workshop-applications' | 'clubs' | 'club-applications' | 'job-applications' | 'intern-applications' | 'statistics'>('applications');
+  const [activeTab, setActiveTab] = useState<'applications' | 'workshops' | 'workshop-applications' | 'clubs' | 'club-applications' | 'job-applications' | 'intern-applications' | 'statistics' | 'theoffice-applications'>('applications');
   const [currentUser, setCurrentUser] = useState<any>(null);
 
   const formatDate = (date: Date) => {
@@ -400,6 +401,19 @@ const AdminDashboard = () => {
             <User size={16} />
             طلبات التدريب
           </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => setActiveTab('theoffice-applications')}
+            className={`py-3 px-4 rounded-xl font-medium flex items-center justify-center gap-2 transition-all text-sm ${
+              activeTab === 'theoffice-applications'
+                ? 'bg-[#22b0fc] text-white shadow-lg'
+                : 'text-gray-600 hover:bg-gray-100'
+            }`}
+          >
+            <Users size={16} />
+            طلبات The Office
+          </motion.button>
         </div>
       </div>
 
@@ -418,6 +432,8 @@ const AdminDashboard = () => {
         <ClubApplications />
       ) : activeTab === 'job-applications' ? (
         <JobApplications />
+      ) : activeTab === 'theoffice-applications' ? (
+        <TheOfficeApplications isAdmin={true} />
       ) : (
         <>
           {/* Stats Cards */}
