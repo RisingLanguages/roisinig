@@ -397,14 +397,52 @@ const RegistrationForm = ({ type, onBack }: RegistrationFormProps) => {
                       />
                       <label
                         htmlFor={method.id}
-                        className={`block p-4 rounded-xl border-2 cursor-pointer transition-all duration-300 text-center ${
+                        className={`block p-4 rounded-xl border-2 cursor-pointer transition-all duration-300 text-center font-semibold text-base ${
                           selectedPaymentMethod === method.name
                             ? 'bg-green-500 border-green-400 text-white shadow-lg'
                             : 'bg-white/10 border-white/20 text-white hover:bg-white/20'
                         }`}
                       >
                         <div className="text-2xl mb-2">{method.icon}</div>
-                        <div className="font-semibold">{method.name}</div>
+                        <div className="font-semibold">
+                          {method.name === 'Baridi Mob' ? 'بريدي موب (Baridi Mob)' :
+                           method.name === 'CCP' ? 'حوالة بريدية CCP' :
+                           method.name === 'Check' ? 'شيك بنكي (Check)' :
+                           method.name}
+                        </div>
+                        {/* Show details inside the selected card */}
+                        {selectedPaymentMethod === method.name && method.name === 'Baridi Mob' && (
+                          <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 mt-3 text-right text-blue-800">
+                            <div className="font-bold text-blue-700 mb-1">تفاصيل الدفع عبر بريدي موب:</div>
+                            <ul className="text-sm space-y-1">
+                              <li><span className="font-semibold">رقم CCP:</span> 00123456789 مفتاح 25</li>
+                              <li><span className="font-semibold">اسم الحساب:</span> أكاديمية رايزين</li>
+                              <li><span className="font-semibold">يرجى إرسال وصل الدفع على واتساب:</span> 0555 123 456</li>
+                              <li><span className="font-semibold">ملاحظة:</span> سيتم تأكيد تسجيلك بعد استلام إثبات الدفع.</li>
+                            </ul>
+                          </div>
+                        )}
+                        {selectedPaymentMethod === method.name && method.name === 'CCP' && (
+                          <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 mt-3 text-right text-blue-800">
+                            <div className="font-bold text-blue-700 mb-1">تفاصيل الدفع عبر CCP:</div>
+                            <ul className="text-sm space-y-1">
+                              <li><span className="font-semibold">رقم CCP:</span> 00123456789 مفتاح 25</li>
+                              <li><span className="font-semibold">اسم الحساب:</span> أكاديمية رايزين</li>
+                              <li><span className="font-semibold">يرجى إرسال وصل الدفع على واتساب:</span> 0555 123 456</li>
+                              <li><span className="font-semibold">ملاحظة:</span> سيتم تأكيد تسجيلك بعد استلام إثبات الدفع.</li>
+                            </ul>
+                          </div>
+                        )}
+                        {selectedPaymentMethod === method.name && method.name === 'Check' && (
+                          <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 mt-3 text-right text-blue-800">
+                            <div className="font-bold text-blue-700 mb-1">تفاصيل الدفع عبر شيك بنكي:</div>
+                            <ul className="text-sm space-y-1">
+                              <li><span className="font-semibold">اسم الحساب:</span> أكاديمية رايزين</li>
+                              <li><span className="font-semibold">يرجى إرسال وصل الدفع على واتساب:</span> 0555 123 456</li>
+                              <li><span className="font-semibold">ملاحظة:</span> سيتم تأكيد تسجيلك بعد استلام إثبات الدفع.</li>
+                            </ul>
+                          </div>
+                        )}
                       </label>
                     </motion.div>
                   ))}
@@ -464,19 +502,6 @@ const RegistrationForm = ({ type, onBack }: RegistrationFormProps) => {
                   </span>
                 </label>
               </div>
-
-              {/* After the payment method selection, show details if Baridi Mob, CCP, or Check is selected */}
-              {['Baridi Mob', 'CCP', 'Check'].includes(selectedPaymentMethod) && (
-                <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mt-4 text-right">
-                  <h4 className="text-blue-700 font-bold mb-2">تفاصيل الدفع</h4>
-                  <ul className="text-blue-800 text-sm space-y-1">
-                    <li><span className="font-semibold">رقم CCP:</span> 00123456789 مفتاح 25</li>
-                    <li><span className="font-semibold">اسم الحساب:</span> أكاديمية رايزين</li>
-                    <li><span className="font-semibold">يرجى إرسال وصل الدفع على واتساب:</span> 0555 123 456</li>
-                    <li><span className="font-semibold">ملاحظة:</span> سيتم تأكيد تسجيلك بعد استلام إثبات الدفع.</li>
-                  </ul>
-                </div>
-              )}
             </motion.div>
           )}
 
