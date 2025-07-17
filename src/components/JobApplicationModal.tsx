@@ -23,8 +23,6 @@ const JobApplicationModal = ({ onClose }: JobApplicationModalProps) => {
     experience: '',
     skills: '',
     motivation: '',
-    availability: '',
-    expectedSalary: '',
     language: '' // For مدرس لغات
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -64,12 +62,6 @@ const JobApplicationModal = ({ onClose }: JobApplicationModalProps) => {
     }
     setSignatureError(false);
 
-    // Validate required fields
-    if (!formData.availability) {
-      setIsSubmitting(false);
-      alert('يرجى تحديد التوفر للعمل');
-      return;
-    }
     // If position is مدرس لغات, require language
     if (formData.position === 'مدرس لغات' && !formData.language) {
       setIsSubmitting(false);
@@ -101,9 +93,7 @@ const JobApplicationModal = ({ onClose }: JobApplicationModalProps) => {
         motivation: formData.motivation,
         cvUrl,
         applicationDate: new Date(),
-        status: 'pending',
-        availability: formData.availability,
-        expectedSalary: formData.expectedSalary || undefined
+        status: 'pending'
       };
       await addDoc(collection(db, 'jobApplications'), applicationData);
       setSubmitStatus('success');
@@ -111,7 +101,7 @@ const JobApplicationModal = ({ onClose }: JobApplicationModalProps) => {
         setFormData({
           fullName: '', age: '', phone: '', email: '', wilaya: '',
           education: '', position: '', experience: '', skills: '',
-          motivation: '', availability: '', expectedSalary: '', language: ''
+          motivation: '', language: ''
         });
         setSubmitStatus(null);
         onClose();
@@ -312,34 +302,6 @@ const JobApplicationModal = ({ onClose }: JobApplicationModalProps) => {
                     />
                   </div>
                 )}
-              </div>
-              {/* Availability and Expected Salary */}
-              <div className="grid md:grid-cols-2 gap-4 mt-4">
-                <div>
-                  <label className="block text-gray-800 font-semibold mb-2">
-                    التوفر للعمل <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={formData.availability}
-                    onChange={e => setFormData(prev => ({ ...prev, availability: e.target.value }))}
-                    className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-300"
-                    placeholder="مثال: دوام كامل، دوام جزئي، ساعات محددة ..."
-                  />
-                </div>
-                <div>
-                  <label className="block text-gray-800 font-semibold mb-2">
-                    الراتب المتوقع (اختياري)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.expectedSalary}
-                    onChange={e => setFormData(prev => ({ ...prev, expectedSalary: e.target.value }))}
-                    className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-300"
-                    placeholder="مثال: 50000 دج، حسب الاتفاق ..."
-                  />
-                </div>
               </div>
             </div>
 
