@@ -404,7 +404,7 @@ const RegistrationForm = ({ type, onBack }: RegistrationFormProps) => {
                         }`}
                       >
                         <div className="text-2xl mb-2">{method.icon}</div>
-                        <div className="font-semibold">
+                        <div className="font-semibold text-gray-800">
                           {method.name === 'Baridi Mob' ? 'بريدي موب (Baridi Mob)' :
                            method.name === 'CCP' ? 'حوالة بريدية CCP' :
                            method.name === 'Check' ? 'شيك بنكي (Check)' :
