@@ -20,7 +20,7 @@ import {
   deleteDoc,
   doc
 } from 'firebase/firestore';
-import { db } from '../0-firebase/config';
+import { db } from '../firebase/config';
 import { Club, ClubDepartment } from '../types';
 
 const ClubManagement = () => {

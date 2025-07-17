@@ -8,7 +8,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyAb51b0FPjEv2UocApwDeb8K9zAHg_TNWg",
   authDomain: "risinga-ebc76.firebaseapp.com",
   projectId: "risinga-ebc76",
-  storageBucket: "risinga-ebc76.appspot.com", // Corrected storage bucket URL
+  storageBucket: "risinga-ebc76.appspot.com",
   messagingSenderId: "386879187827",
   appId: "1:386879187827:web:44b37ee62346cde6913306",
   measurementId: "G-2KJYKCSYEB"

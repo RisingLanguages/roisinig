@@ -37,19 +37,18 @@ import {
 import { signOut } from 'firebase/auth';
 import { onAuthStateChanged } from 'firebase/auth';
 
-import { auth, db } from '../0-firebase/config';
+import { auth, db } from '../firebase/config';
 import { Application } from '../types';
-import format from 'date-fns/format';
-import arSA from 'date-fns/locale/ar-SA';
-
+import { format } from 'date-fns';
+import { arSA } from 'date-fns/locale';
 
 import WorkshopManagement from './WorkshopManagement';
 import WorkshopApplications from './WorkshopApplications';
 import ClubManagement from './ClubManagement';
 import ClubApplications from './ClubApplications';
+import StatisticsPanel from './StatisticsPanel';
 import JobApplications from './JobApplications';
 import InternApplications from './InternApplications';
-import StatisticsPanel from './StatisticsPanel';
 
 const AdminDashboard = () => {
   const [applications, setApplications] = useState<Application[]>([]);
@@ -60,7 +59,7 @@ const AdminDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState<'applications' | 'workshops' | 'workshop-applications' | 'clubs' | 'club-applications' | 'job-applications' | 'intern-applications' | 'statistics'>('applications');
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [currentUser, setCurrentUser] = useState<any>(null);
 
   const formatDate = (date: Date) => {
     try {

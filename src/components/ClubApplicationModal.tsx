@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { X, Users, Check } from 'lucide-react';
 import SignatureCanvas from 'react-signature-canvas';
 import { addDoc, collection } from 'firebase/firestore';
-import { db } from '../0-firebase/config';
+import { db } from '../firebase/config';
 import { Club, ClubApplication } from '../types';
 import { LANGUAGE_LEVELS, HEALTH_PROBLEMS, CLUB_CONTRACT_TEXT } from '../data/constants';
 

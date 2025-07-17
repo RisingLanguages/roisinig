@@ -1,7 +1,10 @@
-import { useState } from 'react';
-
 import { motion } from 'framer-motion';
 import { GraduationCap, CreditCard, Calendar, Users, Briefcase, Shield, ArrowLeft, UserPlus, Sparkles, Star } from 'lucide-react';
+import { useState } from 'react';
+import WorkshopList from './WorkshopList';
+import ClubList from './ClubList';
+import JobApplicationModal from './JobApplicationModal';
+import InternApplicationModal from './InternApplicationModal';
 
 interface ChoicePageProps {
   onChoiceSelect: (type: 'internapplication' | 'courses' | 'workshops' | 'clubs' | 'jobs' | 'admin' | 'basic' | 'full') => void;
@@ -10,6 +13,11 @@ interface ChoicePageProps {
 }
 
 const ChoicePage = ({ onChoiceSelect, onBack, showCourseTypes }: ChoicePageProps) => {
+  const [showWorkshops, setShowWorkshops] = useState(false);
+  const [showClubs, setShowClubs] = useState(false);
+  const [showJobModal, setShowJobModal] = useState(false);
+  const [showInternModal, setShowInternModal] = useState(false);
+
   if (showCourseTypes) {
     return (
       <motion.div
@@ -20,6 +28,23 @@ const ChoicePage = ({ onChoiceSelect, onBack, showCourseTypes }: ChoicePageProps
         dir="rtl"
       >
         <div className="max-w-4xl w-full">
+          {/* Quick Access Button for Basic Registration */}
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-6 text-center"
+          >
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => onChoiceSelect('basic')}
+              className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 flex items-center mx-auto"
+            >
+              <GraduationCap className="w-6 h-6 ml-3" />
+              تسجيل سريع - دورة أولية
+            </motion.button>
+          </motion.div>
+
           {/* Back Button */}
           {onBack && (
             <motion.button
@@ -262,6 +287,30 @@ const ChoicePage = ({ onChoiceSelect, onBack, showCourseTypes }: ChoicePageProps
     );
   }
 
+  // Show workshops list
+  if (showWorkshops) {
+    return <WorkshopList onBack={() => setShowWorkshops(false)} />;
+  }
+
+  // Show clubs list
+  if (showClubs) {
+    return <ClubList onBack={() => setShowClubs(false)} />;
+  }
+
+  const handleServiceSelect = (service: string) => {
+    if (service === 'workshops') {
+      setShowWorkshops(true);
+    } else if (service === 'clubs') {
+      setShowClubs(true);
+    } else if (service === 'jobs') {
+      setShowJobModal(true);
+    } else if (service === 'internapplication') {
+      setShowInternModal(true);
+    } else {
+      onChoiceSelect(service as any);
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
@@ -271,6 +320,23 @@ const ChoicePage = ({ onChoiceSelect, onBack, showCourseTypes }: ChoicePageProps
       dir="rtl"
     >
       <div className="max-w-6xl w-full">
+        {/* Quick Access Button for Basic Registration */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-8 text-center"
+        >
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => onChoiceSelect('basic')}
+            className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 flex items-center mx-auto"
+          >
+            <GraduationCap className="w-6 h-6 ml-3" />
+            تسجيل سريع - دورة أولية
+          </motion.button>
+        </motion.div>
+
         {/* Logo and Header */}
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
@@ -372,7 +438,7 @@ const ChoicePage = ({ onChoiceSelect, onBack, showCourseTypes }: ChoicePageProps
               boxShadow: "0 25px 50px -12px rgba(34, 176, 252, 0.25)"
             }}
             className="group cursor-pointer"
-            onClick={() => onChoiceSelect('courses')}
+            onClick={() => handleServiceSelect('courses')}
           >
             <div className="bg-white rounded-3xl p-8 shadow-2xl hover:shadow-[#22b0fc]/25 transition-all duration-500 relative overflow-hidden h-full border border-gray-100 hover:border-[#22b0fc]/20">
               <div className="absolute inset-0 bg-gradient-to-br from-[#22b0fc]/5 to-cyan-500/5 group-hover:from-[#22b0fc]/10 group-hover:to-cyan-500/10 transition-all duration-500"></div>
@@ -437,7 +503,7 @@ const ChoicePage = ({ onChoiceSelect, onBack, showCourseTypes }: ChoicePageProps
               boxShadow: "0 25px 50px -12px rgba(245, 158, 11, 0.25)"
             }}
             className="group cursor-pointer"
-            onClick={() => onChoiceSelect('workshops')}
+            onClick={() => handleServiceSelect('workshops')}
           >
             <div className="bg-white rounded-3xl p-8 shadow-2xl hover:shadow-yellow-500/25 transition-all duration-500 relative overflow-hidden h-full border border-gray-100 hover:border-yellow-500/20">
               <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/5 to-orange-500/5 group-hover:from-yellow-500/10 group-hover:to-orange-500/10 transition-all duration-500"></div>
@@ -486,7 +552,7 @@ const ChoicePage = ({ onChoiceSelect, onBack, showCourseTypes }: ChoicePageProps
             transition={{ delay: 0.9, duration: 0.6 }}
             whileHover={{ scale: 1.05, rotateY: 5 }}
             className="group cursor-pointer"
-            onClick={() => onChoiceSelect('clubs')}
+            onClick={() => handleServiceSelect('clubs')}
           >
             <div className="bg-white rounded-3xl p-8 shadow-2xl hover:shadow-purple-500/25 transition-all duration-500 relative overflow-hidden h-full">
               <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-pink-500/5 group-hover:from-purple-500/10 group-hover:to-pink-500/10 transition-all duration-500"></div>
@@ -523,7 +589,7 @@ const ChoicePage = ({ onChoiceSelect, onBack, showCourseTypes }: ChoicePageProps
             transition={{ delay: 1.1, duration: 0.6 }}
             whileHover={{ scale: 1.05, rotateY: -5 }}
             className="group cursor-pointer"
-            onClick={() => onChoiceSelect('jobs')}
+            onClick={() => handleServiceSelect('jobs')}
           >
             <div className="bg-white rounded-3xl p-8 shadow-2xl hover:shadow-green-500/25 transition-all duration-500 relative overflow-hidden h-full">
               <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 to-emerald-500/5 group-hover:from-green-500/10 group-hover:to-emerald-500/10 transition-all duration-500"></div>
@@ -560,7 +626,7 @@ const ChoicePage = ({ onChoiceSelect, onBack, showCourseTypes }: ChoicePageProps
             transition={{ delay: 1.3, duration: 0.6 }}
             whileHover={{ scale: 1.05, rotateY: 5 }}
             className="group cursor-pointer"
-            onClick={() => onChoiceSelect('internapplication')}
+            onClick={() => handleServiceSelect('internapplication')}
           >
             <div className="bg-white rounded-3xl p-8 shadow-2xl hover:shadow-indigo-500/25 transition-all duration-500 relative overflow-hidden h-full">
               <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-blue-500/5 group-hover:from-indigo-500/10 group-hover:to-blue-500/10 transition-all duration-500"></div>
@@ -609,6 +675,15 @@ const ChoicePage = ({ onChoiceSelect, onBack, showCourseTypes }: ChoicePageProps
           </motion.button>
         </motion.div>
       </div>
+
+      {/* Modals */}
+      {showJobModal && (
+        <JobApplicationModal onClose={() => setShowJobModal(false)} />
+      )}
+
+      {showInternModal && (
+        <InternApplicationModal onClose={() => setShowInternModal(false)} />
+      )}
     </motion.div>
   );
 };
