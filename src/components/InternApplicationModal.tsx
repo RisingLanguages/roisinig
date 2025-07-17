@@ -16,17 +16,10 @@ const InternApplicationModal = ({ onClose }: InternApplicationModalProps) => {
     phone: '',
     email: '',
     wilaya: '',
-    university: '',
     major: '',
-    year: '',
-    gpa: '',
-    department: '',
-    duration: '',
-    startDate: '',
     skills: '',
     projects: '',
     motivation: '',
-    availability: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'success' | 'error' | null>(null);
@@ -43,14 +36,6 @@ const InternApplicationModal = ({ onClose }: InternApplicationModalProps) => {
     'أخرى'
   ];
 
-  const durations = [
-    'شهر واحد',
-    'شهرين',
-    '3 أشهر',
-    '6 أشهر',
-    'سنة كاملة'
-  ];
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -62,17 +47,10 @@ const InternApplicationModal = ({ onClose }: InternApplicationModalProps) => {
         phone: formData.phone,
         email: formData.email,
         wilaya: formData.wilaya,
-        university: formData.university,
         major: formData.major,
-        year: formData.year,
-        gpa: formData.gpa,
-        department: formData.department,
-        duration: formData.duration,
-        startDate: formData.startDate,
         skills: formData.skills,
         projects: formData.projects,
         motivation: formData.motivation,
-        availability: formData.availability,
         applicationDate: new Date(),
         status: 'pending'
       };
@@ -84,9 +62,7 @@ const InternApplicationModal = ({ onClose }: InternApplicationModalProps) => {
       setTimeout(() => {
         setFormData({
           fullName: '', age: '', phone: '', email: '', wilaya: '',
-          university: '', major: '', year: '', gpa: '', department: '',
-          duration: '', startDate: '', skills: '', projects: '',
-          motivation: '', availability: ''
+          major: '', skills: '', projects: '', motivation: ''
         });
         setSubmitStatus(null);
         onClose();
@@ -281,27 +257,6 @@ const InternApplicationModal = ({ onClose }: InternApplicationModalProps) => {
 
                 <div>
                   <label className="block text-gray-800 font-semibold mb-2">
-                    مدة التدريب <span className="text-red-500">*</span>
-                  </label>
-                  <select
-                    required
-                    value={formData.duration}
-                    onChange={(e) => setFormData(prev => ({ ...prev, duration: e.target.value }))}
-                    className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300"
-                  >
-                    <option value="">اختر المدة</option>
-                    {durations.map((duration) => (
-                      <option key={duration} value={duration}>
-                        {duration}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-4 mt-4">
-                <div>
-                  <label className="block text-gray-800 font-semibold mb-2">
                     تاريخ البدء المفضل <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -311,23 +266,6 @@ const InternApplicationModal = ({ onClose }: InternApplicationModalProps) => {
                     onChange={(e) => setFormData(prev => ({ ...prev, startDate: e.target.value }))}
                     className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300"
                   />
-                </div>
-
-                <div>
-                  <label className="block text-gray-800 font-semibold mb-2">
-                    التوفر <span className="text-red-500">*</span>
-                  </label>
-                  <select
-                    required
-                    value={formData.availability}
-                    onChange={(e) => setFormData(prev => ({ ...prev, availability: e.target.value }))}
-                    className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300"
-                  >
-                    <option value="">اختر التوفر</option>
-                    <option value="دوام كامل">دوام كامل</option>
-                    <option value="دوام جزئي">دوام جزئي</option>
-                    <option value="مرن">مرن</option>
-                  </select>
                 </div>
               </div>
             </div>
