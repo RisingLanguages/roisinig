@@ -39,7 +39,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 
 import { auth, db } from '../firebase/config';
 import { Application } from '../types';
-import { format } from 'date-fns';
+
 import { arSA } from 'date-fns/locale';
 
 import WorkshopManagement from './WorkshopManagement';
