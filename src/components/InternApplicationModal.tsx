@@ -213,7 +213,6 @@ const InternApplicationModal = ({ onClose }: InternApplicationModalProps) => {
                   </label>
                   <input
                     type="email"
-                    required
                     value={formData.email}
                     onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
                     className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300"
@@ -243,20 +242,6 @@ const InternApplicationModal = ({ onClose }: InternApplicationModalProps) => {
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-gray-800 font-semibold mb-2">
-                    الجامعة <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={formData.university}
-                    onChange={(e) => setFormData(prev => ({ ...prev, university: e.target.value }))}
-                    className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300"
-                    placeholder="اسم الجامعة"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-gray-800 font-semibold mb-2">
                     التخصص <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -266,42 +251,6 @@ const InternApplicationModal = ({ onClose }: InternApplicationModalProps) => {
                     onChange={(e) => setFormData(prev => ({ ...prev, major: e.target.value }))}
                     className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300"
                     placeholder="التخصص الأكاديمي"
-                  />
-                </div>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-4 mt-4">
-                <div>
-                  <label className="block text-gray-800 font-semibold mb-2">
-                    السنة الدراسية <span className="text-red-500">*</span>
-                  </label>
-                  <select
-                    required
-                    value={formData.year}
-                    onChange={(e) => setFormData(prev => ({ ...prev, year: e.target.value }))}
-                    className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300"
-                  >
-                    <option value="">اختر السنة</option>
-                    <option value="السنة الأولى">السنة الأولى</option>
-                    <option value="السنة الثانية">السنة الثانية</option>
-                    <option value="السنة الثالثة">السنة الثالثة</option>
-                    <option value="السنة الرابعة">السنة الرابعة</option>
-                    <option value="السنة الخامسة">السنة الخامسة</option>
-                    <option value="ماجستير">ماجستير</option>
-                    <option value="دكتوراه">دكتوراه</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-gray-800 font-semibold mb-2">
-                    المعدل العام (اختياري)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.gpa}
-                    onChange={(e) => setFormData(prev => ({ ...prev, gpa: e.target.value }))}
-                    className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300"
-                    placeholder="مثال: 15.5/20"
                   />
                 </div>
               </div>
