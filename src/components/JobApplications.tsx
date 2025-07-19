@@ -26,7 +26,11 @@ import { JobApplication } from '../types';
 import { format } from 'date-fns';
 import { arSA } from 'date-fns/locale';
 
-const JobApplications = () => {
+interface JobApplicationsProps {
+  isAdmin: boolean;
+}
+
+const JobApplications = ({ isAdmin }: JobApplicationsProps) => {
   const [applications, setApplications] = useState<JobApplication[]>([]);
   const [selectedApplication, setSelectedApplication] = useState<JobApplication | null>(null);
   const [loading, setLoading] = useState(true);
@@ -34,6 +38,7 @@ const JobApplications = () => {
   const [positionFilter, setPositionFilter] = useState('all');
 
   useEffect(() => {
+    if (!isAdmin) return;
     const applicationsQuery = query(
       collection(db, 'jobApplications'), 
       orderBy('applicationDate', 'desc')
@@ -54,7 +59,7 @@ const JobApplications = () => {
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [isAdmin]);
 
   const filteredApplications = applications.filter(app => {
     const matchesPosition = positionFilter === 'all' || app.position === positionFilter;
@@ -141,6 +146,10 @@ const JobApplications = () => {
         </div>
       </div>
     );
+  }
+
+  if (!isAdmin) {
+    return <div className="p-8 text-center text-gray-500">ليس لديك صلاحية الوصول إلى طلبات التوظيف.</div>;
   }
 
   return (
