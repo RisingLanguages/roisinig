@@ -53,32 +53,29 @@ const ChoicePage = ({ onChoiceSelect, onBack, showCourseTypes }: ChoicePageProps
           dir="rtl"
         >
           <div className="max-w-4xl w-full">
-            {/* Quick Access Button for Basic Registration */}
+            {/* Quick Access Card - now styled as a prominent card */}
             <motion.div
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mb-8 text-center"
+              whileHover={{ scale: 1.04, y: -4, boxShadow: '0 8px 32px 0 rgba(34,176,252,0.18)' }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ type: 'spring', stiffness: 200, damping: 20 }}
+              onClick={() => onChoiceSelect('basic')}
+              className="relative bg-gradient-to-r from-blue-500 via-blue-400 to-cyan-400 text-white rounded-3xl shadow-2xl p-8 flex flex-col items-center text-center border-2 border-blue-200 hover:border-[#22b0fc] transition-all duration-300 cursor-pointer mb-10 mx-auto max-w-2xl w-full min-h-[200px]"
+              style={{ zIndex: 2 }}
             >
-              <motion.button
-                whileHover={{ scale: 1.05, boxShadow: "0 20px 40px -12px rgba(59, 130, 246, 0.4)" }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => onChoiceSelect('basic')}
-                className="bg-gradient-to-r from-blue-500 via-blue-600 to-cyan-500 hover:from-blue-600 hover:via-blue-700 hover:to-cyan-600 text-white px-10 py-5 rounded-3xl font-bold text-xl shadow-2xl transition-all duration-300 flex items-center mx-auto relative overflow-hidden"
-              >
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent"
-                  animate={{
-                    x: ['-100%', '100%'],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                />
-                <GraduationCap className="w-7 h-7 ml-3" />
-                <span className="relative z-10">تسجيل سريع - دورة أولية</span>
-              </motion.button>
+              {/* Badge */}
+              <div className="absolute top-4 right-4 flex items-center gap-2">
+                <Sparkles className="w-6 h-6 text-yellow-300 animate-pulse" />
+                <span className="bg-white/80 text-blue-700 font-bold px-4 py-1 rounded-full text-sm shadow">موصى به</span>
+              </div>
+              <GraduationCap className="w-12 h-12 mb-4 text-white drop-shadow-lg" />
+              <h2 className="text-2xl md:text-3xl font-extrabold mb-2">تسجيل سريع - دورة أولية</h2>
+              <p className="text-lg md:text-xl mb-2">أسرع طريقة لحجز مكانك في الدورة، فقط اضغط وابدأ!</p>
+              <div className="flex items-center justify-center gap-2 mt-2">
+                <Star className="w-6 h-6 text-yellow-400 animate-bounce" />
+                <span className="font-semibold">بدون تعقيدات، بدون انتظار</span>
+              </div>
             </motion.div>
 
             {/* Back Button */}
