@@ -53,28 +53,30 @@ const ChoicePage = ({ onChoiceSelect, onBack, showCourseTypes }: ChoicePageProps
           dir="rtl"
         >
           <div className="max-w-4xl w-full">
-            {/* Quick Access Card - now styled as a prominent card */}
+            {/* EXTREMELY PROMINENT Quick Access Card */}
             <motion.div
-              initial={{ opacity: 0, y: -20 }}
+              initial={{ opacity: 0, y: -30 }}
               animate={{ opacity: 1, y: 0 }}
-              whileHover={{ scale: 1.04, y: -4, boxShadow: '0 8px 32px 0 rgba(34,176,252,0.18)' }}
+              whileHover={{ scale: 1.06, boxShadow: '0 0 40px 10px #22b0fc55', borderColor: '#22b0fc' }}
               whileTap={{ scale: 0.98 }}
-              transition={{ type: 'spring', stiffness: 200, damping: 20 }}
+              transition={{ type: 'spring', stiffness: 200, damping: 18 }}
               onClick={() => onChoiceSelect('basic')}
-              className="relative bg-gradient-to-r from-blue-500 via-blue-400 to-cyan-400 text-white rounded-3xl shadow-2xl p-8 flex flex-col items-center text-center border-2 border-blue-200 hover:border-[#22b0fc] transition-all duration-300 cursor-pointer mb-10 mx-auto max-w-2xl w-full min-h-[200px]"
-              style={{ zIndex: 2 }}
+              className="relative bg-gradient-to-r from-blue-600 via-blue-400 to-cyan-400 text-white rounded-3xl shadow-2xl p-10 flex flex-col items-center text-center border-4 border-blue-300 hover:border-[#22b0fc] transition-all duration-300 cursor-pointer mb-12 mx-auto w-full max-w-3xl min-h-[260px] overflow-hidden group"
+              style={{ zIndex: 10 }}
             >
+              {/* Animated Glow Border */}
+              <div className="absolute inset-0 rounded-3xl pointer-events-none animate-glow border-4 border-blue-300 group-hover:border-[#22b0fc]" style={{ boxShadow: '0 0 60px 10px #22b0fc33' }}></div>
               {/* Badge */}
-              <div className="absolute top-4 right-4 flex items-center gap-2">
-                <Sparkles className="w-6 h-6 text-yellow-300 animate-pulse" />
-                <span className="bg-white/80 text-blue-700 font-bold px-4 py-1 rounded-full text-sm shadow">موصى به</span>
+              <div className="absolute top-6 right-6 flex items-center gap-2 z-10">
+                <Sparkles className="w-7 h-7 text-yellow-300 animate-pulse" />
+                <span className="bg-white/90 text-blue-700 font-bold px-5 py-1 rounded-full text-base shadow-lg border border-blue-200">موصى به</span>
               </div>
-              <GraduationCap className="w-12 h-12 mb-4 text-white drop-shadow-lg" />
-              <h2 className="text-2xl md:text-3xl font-extrabold mb-2">تسجيل سريع - دورة أولية</h2>
-              <p className="text-lg md:text-xl mb-2">أسرع طريقة لحجز مكانك في الدورة، فقط اضغط وابدأ!</p>
+              <GraduationCap className="w-16 h-16 mb-4 text-white drop-shadow-xl animate-bounce" />
+              <h2 className="text-3xl md:text-4xl font-extrabold mb-3 drop-shadow-lg">تسجيل سريع - دورة أولية</h2>
+              <p className="text-lg md:text-2xl mb-3 font-semibold drop-shadow">أسرع طريقة لحجز مكانك في الدورة، فقط اضغط وابدأ!</p>
               <div className="flex items-center justify-center gap-2 mt-2">
-                <Star className="w-6 h-6 text-yellow-400 animate-bounce" />
-                <span className="font-semibold">بدون تعقيدات، بدون انتظار</span>
+                <Star className="w-7 h-7 text-yellow-400 animate-spin-slow" />
+                <span className="font-bold text-lg">بدون تعقيدات، بدون انتظار</span>
               </div>
             </motion.div>
 
