@@ -23,13 +23,15 @@ import {
 } from 'firebase/firestore';
 import { db } from '../firebase/config';
 import { InternApplication } from '../types';
-// ... existing code ...
 import { format } from 'date-fns';
 import { arSA } from 'date-fns/locale';
-// ... existing code ...
 
 
-const InternApplications = () => {
+interface InternApplicationsProps {
+  isAdmin: boolean;
+}
+
+const InternApplications = ({ isAdmin }: InternApplicationsProps) => {
   const [applications, setApplications] = useState<InternApplication[]>([]);
   const [selectedApplication, setSelectedApplication] = useState<InternApplication | null>(null);
   const [loading, setLoading] = useState(true);
@@ -37,6 +39,7 @@ const InternApplications = () => {
   const [departmentFilter, setDepartmentFilter] = useState('all');
 
   useEffect(() => {
+    if (!isAdmin) return;
     const applicationsQuery = query(
       collection(db, 'internApplications'), 
       orderBy('applicationDate', 'desc')
@@ -57,7 +60,7 @@ const InternApplications = () => {
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [isAdmin]);
 
   const filteredApplications = applications.filter(app => {
     const matchesDepartment = departmentFilter === 'all' || app.department === departmentFilter;
@@ -148,7 +151,12 @@ const InternApplications = () => {
     );
   }
 
+  if (!isAdmin) {
+    return <div className="p-8 text-center text-gray-500">ليس لديك صلاحية الوصول إلى طلبات التدريب.</div>;
+  }
+
   return (
+    <>
     <div className="space-y-6" dir="rtl">
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -514,6 +522,7 @@ const InternApplications = () => {
         </motion.div>
       )}
     </div>
+    </>
   );
 };
 
