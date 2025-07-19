@@ -433,7 +433,7 @@ const AdminDashboard = () => {
       ) : activeTab === 'job-applications' ? (
         <JobApplications />
       ) : activeTab === 'theoffice-applications' ? (
-        <TheOfficeApplications isAdmin={true} />
+        <TheOfficeApplications />
       ) : (
         <>
           {/* Stats Cards */}

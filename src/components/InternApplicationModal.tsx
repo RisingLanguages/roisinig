@@ -133,15 +133,44 @@ const InternApplicationModal = ({ onClose }: InternApplicationModalProps) => {
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="text-center py-8"
+            className="text-center py-12"
           >
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Check className="w-8 h-8 text-green-600" />
-            </div>
-            <h3 className="text-xl font-bold text-gray-800 mb-2">تم التقديم بنجاح!</h3>
-            <p className="text-gray-600">
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+              className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg"
+            >
+              <Check className="w-10 h-10 text-green-600" />
+            </motion.div>
+            <motion.h3 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="text-2xl font-bold text-gray-800 mb-3"
+            >
+              تم التقديم بنجاح!
+            </motion.h3>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="text-gray-600 text-lg"
+            >
               تم تقديم طلب التدريب بنجاح. سنتواصل معك قريباً لمتابعة الإجراءات.
-            </p>
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              className="mt-6 p-4 bg-green-50 rounded-xl border border-green-200"
+            >
+              <p className="text-green-700 text-sm">
+                ✓ تم استلام طلب التدريب<br/>
+                ✓ سيتم مراجعة الطلب خلال 72 ساعة<br/>
+                ✓ ستصلك رسالة بموعد المقابلة
+              </p>
+            </div>
           </motion.div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-6">

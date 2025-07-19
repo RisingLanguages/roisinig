@@ -337,20 +337,16 @@ const ChoicePage = ({ onChoiceSelect, onBack, showCourseTypes }: ChoicePageProps
             <motion.div
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mb-8 flex justify-center"
+              className="mb-6 text-center"
             >
               <motion.button
                 whileHover={{ scale: 1.05, backgroundColor: '#e0f2ff', borderColor: '#2563eb' }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => onChoiceSelect('basic')}
-                className="cursor-pointer bg-white border-2 border-blue-500 shadow-xl rounded-2xl px-8 py-6 flex flex-col items-center max-w-md w-full transition-all duration-300 hover:bg-blue-50 hover:border-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-200 group"
-                style={{ zIndex: 2 }}
+                className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 flex items-center mx-auto"
               >
-                <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-xl flex items-center justify-center mb-3 shadow-md group-hover:from-blue-600 group-hover:to-cyan-500">
-                  <GraduationCap className="w-8 h-8 text-white" />
-                </div>
-                <span className="text-xl font-extrabold text-blue-700 mb-1">تسجـيل سريـع في الدورات</span>
-                <span className="text-blue-600 text-base font-semibold mb-1">اضغط هنا للتسجيل السريع في الدورات بسهولة!</span>
+                <GraduationCap className="w-6 h-6 ml-3" />
+                تسجيل سريع - دورة أولية
               </motion.button>
             </motion.div>
 
@@ -685,8 +681,8 @@ const ChoicePage = ({ onChoiceSelect, onBack, showCourseTypes }: ChoicePageProps
                 <div className="bg-white rounded-3xl p-8 shadow-2xl hover:shadow-gray-500/25 transition-all duration-500 relative overflow-hidden h-full">
                   <div className="absolute inset-0 bg-gradient-to-br from-gray-500/5 to-gray-400/5 group-hover:from-gray-500/10 group-hover:to-gray-400/10 transition-all duration-500"></div>
                   <div className="relative z-10">
-                    <div className="w-16 h-16 bg-gradient-to-r from-gray-700 to-gray-400 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                      <Users className="w-8 h-8 text-white" />
+                    <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                      <Briefcase className="w-8 h-8 text-white" />
                     </div>
                     <h3 className="text-3xl font-bold text-gray-800 mb-4">The Office Club</h3>
                     <p className="text-gray-600 text-lg mb-6">
@@ -694,15 +690,15 @@ const ChoicePage = ({ onChoiceSelect, onBack, showCourseTypes }: ChoicePageProps
                     </p>
                     <ul className="space-y-2 text-gray-700">
                       <li className="flex items-center">
-                        <div className="w-2 h-2 bg-gray-700 rounded-full ml-3"></div>
+                        <div className="w-2 h-2 bg-orange-500 rounded-full ml-3"></div>
                         فعاليات وأنشطة متنوعة
                       </li>
                       <li className="flex items-center">
-                        <div className="w-2 h-2 bg-gray-700 rounded-full ml-3"></div>
+                        <div className="w-2 h-2 bg-orange-500 rounded-full ml-3"></div>
                         تطوير اللغة الإنجليزية
                       </li>
                       <li className="flex items-center">
-                        <div className="w-2 h-2 bg-gray-700 rounded-full ml-3"></div>
+                        <div className="w-2 h-2 bg-orange-500 rounded-full ml-3"></div>
                         بيئة عمل تفاعلية
                       </li>
                     </ul>

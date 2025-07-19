@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../firebase/config';
 
@@ -44,6 +45,53 @@ const TheOfficeForm = ({ onClose }: { onClose: () => void }) => {
     }
   };
 
+  if (submitStatus === 'success') {
+    return (
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="text-center py-12"
+      >
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+          className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg"
+        >
+          <Check className="w-10 h-10 text-green-600" />
+        </motion.div>
+        <motion.h3 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="text-2xl font-bold text-gray-800 mb-3"
+        >
+          تم التقديم بنجاح!
+        </motion.h3>
+        <motion.p 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="text-gray-600 text-lg"
+        >
+          تم تقديم طلبك لنادي The Office بنجاح. سنتواصل معك قريباً.
+        </motion.p>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+          className="mt-6 p-4 bg-green-50 rounded-xl border border-green-200"
+        >
+          <p className="text-green-700 text-sm">
+            ✓ تم استلام طلبك للنادي<br/>
+            ✓ سيتم مراجعة الطلب خلال 24 ساعة<br/>
+            ✓ ستصلك دعوة للانضمام قريباً
+          </p>
+        </motion.div>
+      </motion.div>
+    );
+  }
+
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
@@ -69,10 +117,11 @@ const TheOfficeForm = ({ onClose }: { onClose: () => void }) => {
       <button type="submit" disabled={isSubmitting} className="w-full py-3 rounded-xl font-bold text-lg transition-all duration-300 bg-gradient-to-r from-gray-700 to-gray-400 text-white mt-4">
         {isSubmitting ? 'جاري الإرسال...' : 'إرسال الطلب'}
       </button>
-      {submitStatus === 'success' && <div className="text-green-600 text-center mt-2">تم إرسال الطلب بنجاح!</div>}
       {submitStatus === 'error' && <div className="text-red-600 text-center mt-2">حدث خطأ أثناء الإرسال. حاول مرة أخرى.</div>}
     </form>
   );
 };
+
+import { Check } from 'lucide-react';
 
 export default TheOfficeForm; 
