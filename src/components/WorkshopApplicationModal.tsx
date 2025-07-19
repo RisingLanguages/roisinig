@@ -164,8 +164,7 @@ const WorkshopApplicationModal = ({ workshop, onClose }: WorkshopApplicationModa
                 ✓ ستصلك تفاصيل الحضور قريباً<br/>
                 ✓ لا تنس إحضار دفتر ملاحظات
               </p>
-            </div>
-            </>
+            </motion.div>
           </motion.div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4">
