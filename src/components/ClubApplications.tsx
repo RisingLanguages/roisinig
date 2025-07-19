@@ -1,92 +1,62 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  Users, 
-  Eye, 
-  Download, 
-  CheckCircle,
-  XCircle,
-  Trash2,
-  User,
-  Phone,
-  Mail,
-  Award
-} from 'lucide-react';
-import { 
-  collection, 
-  query, 
-  orderBy, 
-  onSnapshot,
-  updateDoc,
-  deleteDoc,
-  doc
-} from 'firebase/firestore';
+import { Download, CheckCircle, XCircle, Trash2, Eye, Users } from 'lucide-react';
+import { collection, query, orderBy, onSnapshot, updateDoc, deleteDoc, doc, where } from 'firebase/firestore';
 import { db } from '../firebase/config';
-import { ClubApplication, Club } from '../types';
 import { format } from 'date-fns';
 import { arSA } from 'date-fns/locale';
 
+interface TheOfficeApplication {
+  id: string;
+  fullName: string;
+  age: string;
+  phone: string;
+  englishLevel: string;
+  email?: string;
+  status: 'pending' | 'approved' | 'rejected';
+  applicationDate: Date;
+}
 
-
-const ClubApplications = () => {
-  const [applications, setApplications] = useState<ClubApplication[]>([]);
-  const [clubs, setClubs] = useState<Club[]>([]);
-  const [selectedClub, setSelectedClub] = useState<string>('all');
-  const [selectedApplication, setSelectedApplication] = useState<ClubApplication | null>(null);
+const TheOfficeApplications = ({ isAdmin }: { isAdmin: boolean }) => {
+  const [applications, setApplications] = useState<TheOfficeApplication[]>([]);
+  const [selectedApplication, setSelectedApplication] = useState<TheOfficeApplication | null>(null);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    // Fetch club applications
-    const applicationsQuery = query(
-      collection(db, 'clubApplications'), 
+    if (!isAdmin) return;
+    const q = query(
+      collection(db, 'clubApplications'),
+      where('clubName', '==', 'The Office'),
       orderBy('applicationDate', 'desc')
     );
-    
-    const unsubscribeApplications = onSnapshot(applicationsQuery, (querySnapshot) => {
-      const apps: ClubApplication[] = [];
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const apps: TheOfficeApplication[] = [];
       querySnapshot.forEach((doc) => {
         const data = doc.data();
-        apps.push({ 
-          id: doc.id, 
-          ...data,
-          applicationDate: data.applicationDate?.toDate() 
-        } as ClubApplication);
+        apps.push({
+          id: doc.id,
+          fullName: data.fullName,
+          age: data.age?.toString() || '',
+          phone: data.phone,
+          englishLevel: data.englishLevel,
+          email: data.email,
+          status: data.status || 'pending',
+          applicationDate: data.applicationDate?.toDate?.() || new Date(),
+        });
       });
       setApplications(apps);
       setLoading(false);
     });
-
-    // Fetch clubs for filtering
-    const clubsQuery = query(collection(db, 'clubs'), orderBy('arabicName', 'asc'));
-    
-    const unsubscribeClubs = onSnapshot(clubsQuery, (querySnapshot) => {
-      const clubsData: Club[] = [];
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        clubsData.push({ 
-          id: doc.id, 
-          ...data,
-          createdAt: data.createdAt?.toDate()
-        } as Club);
-      });
-      setClubs(clubsData);
-    });
-
-    return () => {
-      unsubscribeApplications();
-      unsubscribeClubs();
-    };
-  }, []);
+    return () => unsubscribe();
+  }, [isAdmin]);
 
   const filteredApplications = applications.filter(app => {
-    const matchesClub = selectedClub === 'all' || app.clubId === selectedClub;
-    const matchesSearch = !searchTerm || 
+    const matchesSearch = !searchTerm ||
       app.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       app.phone.includes(searchTerm) ||
-      app.email?.toLowerCase().includes(searchTerm.toLowerCase());
-    
-    return matchesClub && matchesSearch;
+      (app.email && app.email.toLowerCase().includes(searchTerm.toLowerCase()));
+    return matchesSearch;
   });
 
   const handleStatusChange = async (appId: string, newStatus: 'pending' | 'approved' | 'rejected') => {
@@ -114,10 +84,8 @@ const ClubApplications = () => {
       'الاسم الكامل', 
       'العمر', 
       'الهاتف', 
+      'مستوى الإنجليزية',
       'البريد الإلكتروني', 
-      'النادي',
-      'القسم',
-      'مستوى اللغة',
       'الحالة', 
       'تاريخ التقديم'
     ].join(',');
@@ -126,10 +94,8 @@ const ClubApplications = () => {
       `"${app.fullName}"`,
       `"${app.age}"`,
       `"${app.phone}"`,
+      `"${app.englishLevel}"`,
       `"${app.email || ''}"`,
-      `"${app.clubName}"`,
-      `"${app.departmentName}"`,
-      `"${app.languageLevel}"`,
       app.status === 'pending' ? 'قيد المراجعة' : 
         app.status === 'approved' ? 'مقبول' : 'مرفوض',
       `"${format(app.applicationDate, 'yyyy-MM-dd HH:mm', { locale: arSA })}"`
@@ -143,15 +109,10 @@ const ClubApplications = () => {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.setAttribute('download', `طلبات_النوادي_${format(new Date(), 'yyyy-MM-dd')}.csv`);
+    link.setAttribute('download', `طلبات_The_Office_${format(new Date(), 'yyyy-MM-dd')}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-  };
-
-  const getClubName = (clubId: string) => {
-    const club = clubs.find(c => c.id === clubId);
-    return club?.arabicName || 'نادي محذوف';
   };
 
   const stats = {
@@ -166,7 +127,7 @@ const ClubApplications = () => {
       <div className="flex items-center justify-center p-8">
         <div className="text-center text-gray-800">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#22b0fc] mx-auto mb-4"></div>
-          <p className="text-lg">جاري تحميل طلبات النوادي...</p>
+          <p className="text-lg">جاري تحميل طلبات The Office...</p>
         </div>
       </div>
     );
@@ -177,8 +138,8 @@ const ClubApplications = () => {
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-gray-800">طلبات الانضمام للنوادي</h2>
-          <p className="text-gray-600 mt-1">إدارة ومتابعة طلبات الانضمام للنوادي</p>
+          <h2 className="text-2xl font-bold text-gray-800">طلبات نادي The Office</h2>
+          <p className="text-gray-600 mt-1">إدارة ومتابعة طلبات نادي The Office</p>
         </div>
         <motion.button
           whileHover={{ scale: 1.03 }}
@@ -203,7 +164,7 @@ const ClubApplications = () => {
           { 
             title: 'قيد المراجعة', 
             value: stats.pending, 
-            icon: User, 
+            icon: Users, 
             color: 'bg-yellow-500' 
           },
           { 
@@ -242,7 +203,6 @@ const ClubApplications = () => {
       {/* Filters */}
       <div className="bg-white rounded-2xl p-4 shadow-md">
         <div className="flex flex-col md:flex-row gap-4">
-          {/* Search Input */}
           <div className="flex-1">
             <div className="relative">
               <input
@@ -259,22 +219,6 @@ const ClubApplications = () => {
               </div>
             </div>
           </div>
-          
-          {/* Club Filter */}
-          <div className="md:w-64">
-            <select
-              value={selectedClub}
-              onChange={(e) => setSelectedClub(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#22b0fc] focus:border-[#22b0fc] outline-none"
-            >
-              <option value="all">جميع النوادي</option>
-              {clubs.map((club) => (
-                <option key={club.id} value={club.id}>
-                  {club.arabicName}
-                </option>
-              ))}
-            </select>
-          </div>
         </div>
       </div>
 
@@ -287,8 +231,7 @@ const ClubApplications = () => {
                 <th className="px-4 py-3 text-right text-sm font-semibold text-gray-700">الاسم</th>
                 <th className="px-4 py-3 text-right text-sm font-semibold text-gray-700">العمر</th>
                 <th className="px-4 py-3 text-right text-sm font-semibold text-gray-700">الهاتف</th>
-                <th className="px-4 py-3 text-right text-sm font-semibold text-gray-700">النادي</th>
-                <th className="px-4 py-3 text-right text-sm font-semibold text-gray-700">القسم</th>
+                <th className="px-4 py-3 text-right text-sm font-semibold text-gray-700">مستوى الإنجليزية</th>
                 <th className="px-4 py-3 text-right text-sm font-semibold text-gray-700">الحالة</th>
                 <th className="px-4 py-3 text-right text-sm font-semibold text-gray-700">التاريخ</th>
                 <th className="px-4 py-3 text-right text-sm font-semibold text-gray-700">الإجراءات</th>
@@ -296,54 +239,53 @@ const ClubApplications = () => {
             </thead>
             <tbody className="divide-y divide-gray-200">
               {filteredApplications.length > 0 ? (
-                filteredApplications.map((application, index) => (
+                filteredApplications.map((app, index) => (
                   <motion.tr
-                    key={application.id}
+                    key={app.id}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: index * 0.05 }}
                     className="hover:bg-gray-50 transition-colors"
                   >
-                    <td className="px-4 py-3 text-sm text-gray-800 font-medium">{application.fullName}</td>
-                    <td className="px-4 py-3 text-sm text-gray-800">{application.age}</td>
-                    <td className="px-4 py-3 text-sm text-gray-800" dir="ltr">{application.phone}</td>
-                    <td className="px-4 py-3 text-sm text-gray-800">{application.clubName}</td>
-                    <td className="px-4 py-3 text-sm text-gray-800">{application.departmentName}</td>
+                    <td className="px-4 py-3 text-sm text-gray-800 font-medium">{app.fullName}</td>
+                    <td className="px-4 py-3 text-sm text-gray-800">{app.age}</td>
+                    <td className="px-4 py-3 text-sm text-gray-800" dir="ltr">{app.phone}</td>
+                    <td className="px-4 py-3 text-sm text-gray-800">{app.englishLevel}</td>
                     <td className="px-4 py-3 text-sm">
                       <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                        application.status === 'pending'
+                        app.status === 'pending'
                           ? 'bg-yellow-100 text-yellow-800'
-                          : application.status === 'approved'
+                          : app.status === 'approved'
                             ? 'bg-green-100 text-green-800'
                             : 'bg-red-100 text-red-800'
                       }`}>
-                        {application.status === 'pending' 
+                        {app.status === 'pending' 
                           ? 'قيد المراجعة' 
-                          : application.status === 'approved' 
+                          : app.status === 'approved' 
                             ? 'مقبول' 
                             : 'مرفوض'}
                       </span>
                     </td>
                     <td className="px-4 py-3 text-sm text-gray-800">
-                      {format(application.applicationDate, 'yyyy/MM/dd', { locale: arSA })}
+                      {format(app.applicationDate, 'yyyy/MM/dd', { locale: arSA })}
                     </td>
                     <td className="px-4 py-3 text-sm">
                       <div className="flex gap-2 justify-end">
                         <motion.button
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.9 }}
-                          onClick={() => setSelectedApplication(application)}
+                          onClick={() => setSelectedApplication(app)}
                           className="p-1.5 text-[#22b0fc] hover:bg-blue-50 rounded-lg transition-colors"
                           title="عرض التفاصيل"
                         >
                           <Eye size={18} />
                         </motion.button>
                         
-                        {application.status !== 'approved' && (
+                        {app.status !== 'approved' && (
                           <motion.button
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.9 }}
-                            onClick={() => handleStatusChange(application.id!, 'approved')}
+                            onClick={() => handleStatusChange(app.id, 'approved')}
                             className="p-1.5 text-green-500 hover:bg-green-50 rounded-lg transition-colors"
                             title="قبول الطلب"
                           >
@@ -351,11 +293,11 @@ const ClubApplications = () => {
                           </motion.button>
                         )}
                         
-                        {application.status !== 'rejected' && (
+                        {app.status !== 'rejected' && (
                           <motion.button
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.9 }}
-                            onClick={() => handleStatusChange(application.id!, 'rejected')}
+                            onClick={() => handleStatusChange(app.id, 'rejected')}
                             className="p-1.5 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
                             title="رفض الطلب"
                           >
@@ -366,7 +308,7 @@ const ClubApplications = () => {
                         <motion.button
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.9 }}
-                          onClick={() => handleDelete(application.id!)}
+                          onClick={() => handleDelete(app.id)}
                           className="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                           title="حذف الطلب"
                         >
@@ -378,7 +320,7 @@ const ClubApplications = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan={8} className="px-4 py-8 text-center text-gray-500">
+                  <td colSpan={7} className="px-4 py-8 text-center text-gray-500">
                     <Users className="w-10 h-10 mx-auto mb-2 opacity-40" />
                     <p className="text-sm">لا توجد طلبات متطابقة مع معايير البحث</p>
                   </td>
@@ -400,11 +342,11 @@ const ClubApplications = () => {
           <motion.div
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="bg-white rounded-2xl p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto shadow-xl"
+            className="bg-white rounded-2xl p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-xl"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex justify-between items-center mb-6 border-b pb-4">
-              <h2 className="text-xl font-bold text-gray-800">تفاصيل طلب الانضمام للنادي</h2>
+              <h2 className="text-xl font-bold text-gray-800">تفاصيل طلب The Office</h2>
               <button
                 onClick={() => setSelectedApplication(null)}
                 className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
@@ -414,82 +356,32 @@ const ClubApplications = () => {
               </button>
             </div>
 
-            <div className="space-y-6">
-              {/* Personal Information */}
+            <div className="space-y-4">
               <div className="bg-gray-50 p-4 rounded-lg">
                 <h3 className="font-semibold text-gray-700 mb-3">المعلومات الشخصية</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <p className="text-sm text-gray-500">الاسم الكامل</p>
                     <p className="font-medium">{selectedApplication.fullName}</p>
                   </div>
                   <div>
                     <p className="text-sm text-gray-500">العمر</p>
-                    <p className="font-medium">{selectedApplication.age} سنة</p>
+                    <p className="font-medium">{selectedApplication.age}</p>
                   </div>
                   <div>
                     <p className="text-sm text-gray-500">رقم الهاتف</p>
                     <p className="font-medium" dir="ltr">{selectedApplication.phone}</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-500">البريد الإلكتروني</p>
-                    <p className="font-medium">{selectedApplication.email || 'غير متوفر'}</p>
+                    <p className="text-sm text-gray-500">مستوى الإنجليزية</p>
+                    <p className="font-medium">{selectedApplication.englishLevel}</p>
                   </div>
-                  <div>
-                    <p className="text-sm text-gray-500">تاريخ الميلاد</p>
-                    <p className="font-medium">{selectedApplication.dateOfBirth}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-500">مكان الميلاد</p>
-                    <p className="font-medium">{selectedApplication.placeOfBirth}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-500">العنوان</p>
-                    <p className="font-medium">{selectedApplication.address}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-500">مستوى اللغة</p>
-                    <p className="font-medium">{selectedApplication.languageLevel}</p>
-                  </div>
-                  {selectedApplication.healthProblems && (
+                  {selectedApplication.email && (
                     <div>
-                      <p className="text-sm text-gray-500">المشاكل الصحية</p>
-                      <p className="font-medium">{selectedApplication.healthProblems}</p>
+                      <p className="text-sm text-gray-500">البريد الإلكتروني</p>
+                      <p className="font-medium">{selectedApplication.email}</p>
                     </div>
                   )}
-                </div>
-              </div>
-
-              {/* Club Information */}
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <h3 className="font-semibold text-gray-700 mb-3">معلومات النادي</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-sm text-gray-500">اسم النادي</p>
-                    <p className="font-medium">{selectedApplication.clubName}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-500">القسم</p>
-                    <p className="font-medium">{selectedApplication.departmentName}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-500">حالة الطلب</p>
-                    <p className="font-medium">
-                      <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                        selectedApplication.status === 'pending'
-                          ? 'bg-yellow-100 text-yellow-800'
-                          : selectedApplication.status === 'approved'
-                            ? 'bg-green-100 text-green-800'
-                            : 'bg-red-100 text-red-800'
-                      }`}>
-                        {selectedApplication.status === 'pending' 
-                          ? 'قيد المراجعة' 
-                          : selectedApplication.status === 'approved' 
-                            ? 'مقبول' 
-                            : 'مرفوض'}
-                      </span>
-                    </p>
-                  </div>
                   <div>
                     <p className="text-sm text-gray-500">تاريخ التقديم</p>
                     <p className="font-medium">
@@ -499,32 +391,12 @@ const ClubApplications = () => {
                 </div>
               </div>
 
-              {/* Skills */}
-              {selectedApplication.skills && (
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h3 className="font-semibold text-gray-700 mb-3">المهارات</h3>
-                  <p className="text-gray-800">{selectedApplication.skills}</p>
-                </div>
-              )}
-
-              {/* Signature */}
-              {selectedApplication.signature && (
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h3 className="font-semibold text-gray-700 mb-3">التوقيع</h3>
-                  <img 
-                    src={selectedApplication.signature} 
-                    alt="توقيع المتقدم"
-                    className="h-24 object-contain border border-gray-200 rounded-lg bg-white"
-                  />
-                </div>
-              )}
-
               {/* Admin Actions */}
               <div className="flex flex-wrap gap-3 justify-end pt-4 border-t">
                 <motion.button
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
-                  onClick={() => handleStatusChange(selectedApplication.id!, 'approved')}
+                  onClick={() => handleStatusChange(selectedApplication.id, 'approved')}
                   className={`px-4 py-2 rounded-lg font-medium flex items-center gap-2 ${
                     selectedApplication.status === 'approved'
                       ? 'bg-green-100 text-green-800'
@@ -539,7 +411,7 @@ const ClubApplications = () => {
                 <motion.button
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
-                  onClick={() => handleStatusChange(selectedApplication.id!, 'rejected')}
+                  onClick={() => handleStatusChange(selectedApplication.id, 'rejected')}
                   className={`px-4 py-2 rounded-lg font-medium flex items-center gap-2 ${
                     selectedApplication.status === 'rejected'
                       ? 'bg-red-100 text-red-800'
@@ -554,7 +426,7 @@ const ClubApplications = () => {
                 <motion.button
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
-                  onClick={() => handleDelete(selectedApplication.id!)}
+                  onClick={() => handleDelete(selectedApplication.id)}
                   className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg font-medium flex items-center gap-2"
                 >
                   <Trash2 size={18} />
@@ -565,8 +437,9 @@ const ClubApplications = () => {
           </motion.div>
         </motion.div>
       )}
+      </div>
     </div>
   );
 };
 
-export default ClubApplications;
+export default TheOfficeApplications; 
