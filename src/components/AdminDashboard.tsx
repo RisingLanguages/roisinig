@@ -421,19 +421,19 @@ const AdminDashboard = () => {
       {activeTab === 'workshops' ? (
         <WorkshopManagement />
       ) : activeTab === 'statistics' ? (
-        <StatisticsPanel />
+        <StatisticsPanel isAdmin={true} />
       ) : activeTab === 'intern-applications' ? (
-        <InternApplications />
+        <InternApplications isAdmin={true} />
       ) : activeTab === 'workshop-applications' ? (
         <WorkshopApplications isAdmin={true} />
       ) : activeTab === 'clubs' ? (
         <ClubManagement />
       ) : activeTab === 'club-applications' ? (
-        <ClubApplications />
+        <ClubApplications isAdmin={true} />
       ) : activeTab === 'job-applications' ? (
-        <JobApplications />
+        <JobApplications isAdmin={true} />
       ) : activeTab === 'theoffice-applications' ? (
-        <TheOfficeApplications />
+        <TheOfficeApplications isAdmin={true} />
       ) : (
         <>
           {/* Stats Cards */}
