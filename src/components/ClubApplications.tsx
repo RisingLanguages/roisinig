@@ -23,6 +23,8 @@ import {
 } from 'firebase/firestore';
 import { db } from '../firebase/config';
 import { ClubApplication, Club } from '../types';
+import { format } from 'date-fns';
+import { arSA } from 'date-fns/locale';
 
 
 interface ClubApplicationsProps {
@@ -41,8 +43,7 @@ const ClubApplications = ({ isAdmin }: ClubApplicationsProps) => {
     if (!isAdmin) return;
     // Fetch club applications
     const applicationsQuery = query(
-      collection(db, 'clubApplications'), 
-      orderBy('applicationDate', 'desc')
+      collection(db, 'clubApplications')
     );
     
     const unsubscribeApplications = onSnapshot(applicationsQuery, (querySnapshot) => {
@@ -54,6 +55,12 @@ const ClubApplications = ({ isAdmin }: ClubApplicationsProps) => {
           ...data,
           applicationDate: data.applicationDate?.toDate() 
         } as ClubApplication);
+      });
+      // Sort by application date in descending order
+      apps.sort((a, b) => {
+        const dateA = a.applicationDate || new Date(0);
+        const dateB = b.applicationDate || new Date(0);
+        return dateB.getTime() - dateA.getTime();
       });
       setApplications(apps);
       setLoading(false);
