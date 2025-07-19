@@ -1,11 +1,10 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { X, User, Check, GraduationCap } from 'lucide-react';
 import { addDoc, collection } from 'firebase/firestore';
 import { db } from '../firebase/config';
 import { InternApplication } from '../types';
 import SignatureCanvas from 'react-signature-canvas';
-import { useRef } from 'react';
 
 interface InternApplicationModalProps {
   onClose: () => void;
@@ -19,6 +18,8 @@ const InternApplicationModal = ({ onClose }: InternApplicationModalProps) => {
     email: '',
     wilaya: '',
     major: '',
+    department: '',
+    startDate: '',
     skills: '',
     projects: '',
     motivation: '',
@@ -59,6 +60,8 @@ const InternApplicationModal = ({ onClose }: InternApplicationModalProps) => {
         email: formData.email,
         wilaya: formData.wilaya,
         major: formData.major,
+        department: formData.department,
+        startDate: formData.startDate,
         skills: formData.skills,
         projects: formData.projects,
         motivation: formData.motivation,
@@ -74,7 +77,7 @@ const InternApplicationModal = ({ onClose }: InternApplicationModalProps) => {
       setTimeout(() => {
         setFormData({
           fullName: '', age: '', phone: '', email: '', wilaya: '',
-          major: '', skills: '', projects: '', motivation: ''
+          major: '', department: '', startDate: '', skills: '', projects: '', motivation: ''
         });
         setSubmitStatus(null);
         onClose();
@@ -170,7 +173,7 @@ const InternApplicationModal = ({ onClose }: InternApplicationModalProps) => {
                 ✓ سيتم مراجعة الطلب خلال 72 ساعة<br/>
                 ✓ ستصلك رسالة بموعد المقابلة
               </p>
-            </div>
+            </motion.div>
           </motion.div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-6">
