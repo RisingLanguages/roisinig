@@ -44,7 +44,7 @@ import { format } from 'date-fns';
 import { arSA } from 'date-fns/locale';
 
 import WorkshopManagement from './WorkshopManagement';
-import WorkshopApplications from './WorkshopList';
+import WorkshopApplications from './WorkshopApplications';
 import ClubManagement from './ClubManagement';
 import ClubApplications from './ClubApplications';
 import StatisticsPanel from './StatisticsPanel';
@@ -425,7 +425,7 @@ const AdminDashboard = () => {
       ) : activeTab === 'intern-applications' ? (
         <InternApplications />
       ) : activeTab === 'workshop-applications' ? (
-        <WorkshopApplications />
+        <WorkshopApplications isAdmin={true} />
       ) : activeTab === 'clubs' ? (
         <ClubManagement />
       ) : activeTab === 'club-applications' ? (
