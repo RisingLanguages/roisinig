@@ -204,7 +204,7 @@ const JobApplicationModal = ({ onClose }: JobApplicationModalProps) => {
                 ✓ سيتم مراجعة طلبك خلال 48 ساعة<br/>
                 ✓ ستصلك رسالة تأكيد قريباً
               </p>
-            </div>
+            </motion.div>
           </motion.div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-6">
