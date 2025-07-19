@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { GraduationCap, CreditCard, Calendar, Users, Briefcase, Shield, ArrowLeft, UserPlus, Sparkles, Star } from 'lucide-react';
+import { GraduationCap, CreditCard, Calendar, Users, Briefcase, Shield, ArrowLeft, UserPlus, Sparkles, Star, X } from 'lucide-react';
 import { useState } from 'react';
 import WorkshopList from './WorkshopList';
 import ClubList from './ClubList';
