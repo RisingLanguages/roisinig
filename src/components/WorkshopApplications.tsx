@@ -25,7 +25,11 @@ import { WorkshopApplication } from '../types';
 import { format } from 'date-fns';
 import { arSA } from 'date-fns/locale';
 
-const WorkshopApplications = () => {
+interface WorkshopApplicationsProps {
+  isAdmin: boolean;
+}
+
+const WorkshopApplications = ({ isAdmin }: WorkshopApplicationsProps) => {
   const [applications, setApplications] = useState<WorkshopApplication[]>([]);
   const [selectedApplication, setSelectedApplication] = useState<WorkshopApplication | null>(null);
   const [loading, setLoading] = useState(true);
@@ -33,6 +37,7 @@ const WorkshopApplications = () => {
   const [workshopFilter, setWorkshopFilter] = useState('all');
 
   useEffect(() => {
+    if (!isAdmin) return;
     const applicationsQuery = query(
       collection(db, 'workshopApplications'), 
       orderBy('applicationDate', 'desc')
@@ -53,7 +58,7 @@ const WorkshopApplications = () => {
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [isAdmin]);
 
   const filteredApplications = applications.filter(app => {
     const matchesWorkshop = workshopFilter === 'all' || app.workshopTitle === workshopFilter;
@@ -139,6 +144,10 @@ const WorkshopApplications = () => {
         </div>
       </div>
     );
+  }
+
+  if (!isAdmin) {
+    return <div className="p-8 text-center text-gray-500">ليس لديك صلاحية الوصول إلى تسجيلات الورش.</div>;
   }
 
   return (
