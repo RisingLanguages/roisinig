@@ -106,7 +106,8 @@ const ClubApplicationModal = ({ club, onClose }: ClubApplicationModalProps) => {
       setSubmitStatus('success');
       setTimeout(() => {
         setSubmitStatus(null);
-        onClose();
+        // Navigate back to home page after successful submission
+        window.location.reload();
       }, 2000);
     } catch (error) {
       console.error('Error submitting application:', error);

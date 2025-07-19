@@ -80,7 +80,8 @@ const InternApplicationModal = ({ onClose }: InternApplicationModalProps) => {
           major: '', department: '', startDate: '', skills: '', projects: '', motivation: ''
         });
         setSubmitStatus(null);
-        onClose();
+        // Navigate back to home page after successful submission
+        window.location.reload();
       }, 2000);
 
     } catch (error) {

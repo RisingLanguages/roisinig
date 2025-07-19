@@ -41,6 +41,8 @@ const TheOfficeApplications = ({ isAdmin }: { isAdmin: boolean }) => {
           phone: data.phone,
           englishLevel: data.englishLevel,
           email: data.email,
+          preferredSession: data.preferredSession,
+          attendanceConfirmation: data.attendanceConfirmation,
           status: data.status || 'pending',
           applicationDate: data.applicationDate?.toDate?.() || new Date(),
         });
@@ -85,6 +87,8 @@ const TheOfficeApplications = ({ isAdmin }: { isAdmin: boolean }) => {
       'العمر', 
       'الهاتف', 
       'مستوى الإنجليزية',
+      'الحصة المفضلة',
+      'تأكيد الحضور',
       'البريد الإلكتروني', 
       'الحالة', 
       'تاريخ التقديم'
@@ -95,6 +99,8 @@ const TheOfficeApplications = ({ isAdmin }: { isAdmin: boolean }) => {
       `"${app.age}"`,
       `"${app.phone}"`,
       `"${app.englishLevel}"`,
+      `"${app.preferredSession || ''}"`,
+      `"${app.attendanceConfirmation || ''}"`,
       `"${app.email || ''}"`,
       app.status === 'pending' ? 'قيد المراجعة' : 
         app.status === 'approved' ? 'مقبول' : 'مرفوض',
@@ -233,6 +239,7 @@ const TheOfficeApplications = ({ isAdmin }: { isAdmin: boolean }) => {
                 <th className="px-4 py-3 text-right text-sm font-semibold text-gray-700">العمر</th>
                 <th className="px-4 py-3 text-right text-sm font-semibold text-gray-700">الهاتف</th>
                 <th className="px-4 py-3 text-right text-sm font-semibold text-gray-700">مستوى الإنجليزية</th>
+                <th className="px-4 py-3 text-right text-sm font-semibold text-gray-700">الحصة</th>
                 <th className="px-4 py-3 text-right text-sm font-semibold text-gray-700">الحالة</th>
                 <th className="px-4 py-3 text-right text-sm font-semibold text-gray-700">التاريخ</th>
                 <th className="px-4 py-3 text-right text-sm font-semibold text-gray-700">الإجراءات</th>
@@ -252,6 +259,7 @@ const TheOfficeApplications = ({ isAdmin }: { isAdmin: boolean }) => {
                     <td className="px-4 py-3 text-sm text-gray-800">{app.age}</td>
                     <td className="px-4 py-3 text-sm text-gray-800" dir="ltr">{app.phone}</td>
                     <td className="px-4 py-3 text-sm text-gray-800">{app.englishLevel}</td>
+                    <td className="px-4 py-3 text-sm text-gray-800">{app.preferredSession || 'غير محدد'}</td>
                     <td className="px-4 py-3 text-sm">
                       <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
                         app.status === 'pending'
@@ -321,7 +329,7 @@ const TheOfficeApplications = ({ isAdmin }: { isAdmin: boolean }) => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan={7} className="px-4 py-8 text-center text-gray-500">
+                  <td colSpan={8} className="px-4 py-8 text-center text-gray-500">
                     <Users className="w-10 h-10 mx-auto mb-2 opacity-40" />
                     <p className="text-sm">لا توجد طلبات متطابقة مع معايير البحث</p>
                   </td>
@@ -377,6 +385,18 @@ const TheOfficeApplications = ({ isAdmin }: { isAdmin: boolean }) => {
                     <p className="text-sm text-gray-500">مستوى الإنجليزية</p>
                     <p className="font-medium">{selectedApplication.englishLevel}</p>
                   </div>
+                  {selectedApplication.preferredSession && (
+                    <div>
+                      <p className="text-sm text-gray-500">الحصة المفضلة</p>
+                      <p className="font-medium">{selectedApplication.preferredSession}</p>
+                    </div>
+                  )}
+                  {selectedApplication.attendanceConfirmation && (
+                    <div>
+                      <p className="text-sm text-gray-500">تأكيد الحضور</p>
+                      <p className="font-medium">{selectedApplication.attendanceConfirmation}</p>
+                    </div>
+                  )}
                   {selectedApplication.email && (
                     <div>
                       <p className="text-sm text-gray-500">البريد الإلكتروني</p>

@@ -87,6 +87,8 @@ const RegistrationForm = ({ type, onBack }: RegistrationFormProps) => {
           signatureRef.current.clear();
         }
         setSubmitStatus(null);
+        // Navigate back to home page after successful submission
+        window.location.reload();
       }, 3000);
 
     } catch (error) {

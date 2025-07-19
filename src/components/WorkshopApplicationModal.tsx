@@ -54,7 +54,8 @@ const WorkshopApplicationModal = ({ workshop, onClose }: WorkshopApplicationModa
           education: '', experience: '', expectations: ''
         });
         setSubmitStatus(null);
-        onClose();
+        // Navigate back to home page after successful submission
+        window.location.reload();
       }, 2000);
 
     } catch (error) {

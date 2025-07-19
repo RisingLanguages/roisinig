@@ -111,7 +111,8 @@ const JobApplicationModal = ({ onClose }: JobApplicationModalProps) => {
           motivation: '', language: '', cvBase64: ''
         });
         setSubmitStatus(null);
-        onClose();
+        // Navigate back to home page after successful submission
+        window.location.reload();
       }, 2000);
     } catch (error) {
       console.error('Error submitting job application:', error);
