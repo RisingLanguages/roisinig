@@ -17,13 +17,14 @@ interface TheOfficeApplication {
   applicationDate: Date;
 }
 
-const TheOfficeApplications = () => {
+const TheOfficeApplications = ({ isAdmin }: { isAdmin: boolean }) => {
   const [applications, setApplications] = useState<TheOfficeApplication[]>([]);
   const [selectedApplication, setSelectedApplication] = useState<TheOfficeApplication | null>(null);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
+    if (!isAdmin) return;
     const q = query(
       collection(db, 'clubApplications'),
       where('clubName', '==', 'The Office'),
@@ -48,7 +49,7 @@ const TheOfficeApplications = () => {
       setLoading(false);
     });
     return () => unsubscribe();
-  }, []);
+  }, [isAdmin]);
 
   const filteredApplications = applications.filter(app => {
     const matchesSearch = !searchTerm ||
@@ -133,6 +134,7 @@ const TheOfficeApplications = () => {
   }
 
   return (
+    <>
     <div className="space-y-6" dir="rtl">
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -438,6 +440,7 @@ const TheOfficeApplications = () => {
       )}
       </div>
     </div>
+    </>
   );
 };
 
