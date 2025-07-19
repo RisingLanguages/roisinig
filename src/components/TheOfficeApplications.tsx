@@ -440,6 +440,7 @@ const TheOfficeApplications = ({ isAdmin }: { isAdmin: boolean }) => {
       )}
       </div>
     </div>
+    </motion.button>
     </>
   );
 };
