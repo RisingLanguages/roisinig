@@ -1,11 +1,44 @@
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { X, Users, Check } from 'lucide-react';
-import SignatureCanvas from 'react-signature-canvas';
-import { addDoc, collection } from 'firebase/firestore';
+import { X } from 'lucide-react';
+import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../firebase/config';
-import { Club, ClubApplication } from '../types';
-import { LANGUAGE_LEVELS, HEALTH_PROBLEMS, CLUB_CONTRACT_TEXT } from '../data/constants';
+import SignatureCanvas from 'react-signature-canvas';
+import { ClubApplication, Club } from '../types';
+
+// Constants
+const LANGUAGE_LEVELS = [
+  { id: 1, name: 'مبتدئ', description: 'لا يتحدث الإنجليزية' },
+  { id: 2, name: 'متوسط', description: 'يتحدث قليلاً' },
+  { id: 3, name: 'متقدم', description: 'يتحدث بطلاقة' }
+];
+
+const HEALTH_PROBLEMS = [
+  'أمراض القلب',
+  'السكري',
+  'الضغط',
+  'الحساسية',
+  'أمراض الجهاز التنفسي',
+  'أمراض العظام',
+  'أخرى'
+];
+
+const CLUB_CONTRACT_TEXT = `
+شروط وأحكام النادي
+
+1. الالتزام بحضور الأنشطة والبرامج المقررة
+2. احترام قواعد النادي والأنظمة الداخلية
+3. الحفاظ على نظافة المرافق والأدوات
+4. التعاون مع الإدارة والمدربين
+5. عدم إفشاء معلومات النادي أو أعضائه
+6. الالتزام بمواعيد الحضور والانصراف
+7. إبلاغ الإدارة عن أي مشاكل صحية أو ظروف خاصة
+8. المشاركة الإيجابية في الأنشطة والفعاليات
+9. احترام حقوق الآخرين وعدم التمييز
+10. الالتزام بالزي الرسمي للنادي أثناء الأنشطة
+
+أوافق على جميع الشروط والأحكام المذكورة أعلاه وأتعهد بالالتزام بها.
+`;
 
 interface ClubApplicationModalProps {
   club: Club;
@@ -71,19 +104,12 @@ const ClubApplicationModal = ({ club, onClose }: ClubApplicationModalProps) => {
       await addDoc(collection(db, 'clubApplications'), applicationData);
 
       setSubmitStatus('success');
-      
       setTimeout(() => {
-        setFormData({
-          fullName: '', age: '', phone: '', email: '', dateOfBirth: '',
-          placeOfBirth: '', skills: '', address: '', languageLevel: '',
-          healthProblems: '', departmentId: '', agreedToContract: false
-        });
         setSubmitStatus(null);
         onClose();
       }, 2000);
-
     } catch (error) {
-      console.error('Error submitting club application:', error);
+      console.error('Error submitting application:', error);
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
@@ -94,6 +120,7 @@ const ClubApplicationModal = ({ club, onClose }: ClubApplicationModalProps) => {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
       className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
       onClick={onClose}
     >
@@ -102,108 +129,38 @@ const ClubApplicationModal = ({ club, onClose }: ClubApplicationModalProps) => {
         animate={{ scale: 1, opacity: 1 }}
         className="bg-white rounded-2xl p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
-        dir="rtl"
       >
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-800">الانضمام للنادي</h2>
+          <div>
+            <h2 className="text-2xl font-bold text-gray-800">تقديم طلب انضمام</h2>
+            <p className="text-gray-600 mt-1">نادي {club.arabicName}</p>
+          </div>
           <button
             onClick={onClose}
             className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
           >
-            <X size={20} />
+            <X size={24} />
           </button>
-        </div>
-
-        {/* Club Info */}
-        <div className="bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-xl p-4 mb-6">
-          <div className="flex items-start gap-4">
-            <img
-              src={club.imageUrl}
-              alt={club.arabicName}
-              className="w-20 h-20 object-cover rounded-lg"
-              onError={(e) => {
-                e.currentTarget.src = 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=400';
-              }}
-            />
-            <div className="flex-1">
-              <h3 className="text-lg font-bold text-gray-800 mb-2">
-                {club.arabicName}
-              </h3>
-              <p className="text-gray-600 text-sm mb-2">{club.description}</p>
-              <div className="flex items-center text-sm text-gray-600">
-                <Users size={16} className="ml-2" />
-                {club.departments.length} أقسام متاحة
-              </div>
-            </div>
-          </div>
         </div>
 
         {submitStatus === 'success' ? (
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="text-center py-12"
+            className="text-center py-8"
           >
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-              className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg"
-            >
-              <Check className="w-10 h-10 text-green-600" />
-            </motion.div>
-            <motion.h3 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="text-2xl font-bold text-gray-800 mb-3"
-            >
-              تم التقديم بنجاح!
-            </motion.h3>
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              className="text-gray-600 text-lg"
-            >
-              تم تقديم طلب انضمامك للنادي بنجاح. سنتواصل معك قريباً.
-            </motion.p>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-              className="mt-6 p-4 bg-green-50 rounded-xl border border-green-200"
-            >
-              <p className="text-green-700 text-sm">
-                ✓ تم استلام طلب انضمامك<br/>
-                ✓ سيتم مراجعة الطلب خلال 24 ساعة<br/>
-                ✓ ستصلك رسالة تأكيد قريباً
-              </p>
+            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
             </div>
+            <h3 className="text-xl font-bold text-gray-800 mb-2">تم تقديم الطلب بنجاح!</h3>
+            <p className="text-gray-600">
+              ✓ ستصلك رسالة تأكيد قريباً
+            </p>
           </motion.div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Department Selection */}
-            <div>
-              <label className="block text-gray-800 font-semibold mb-2">
-                اختر القسم <span className="text-red-500">*</span>
-              </label>
-              <select
-                required
-                value={formData.departmentId}
-                onChange={(e) => setFormData(prev => ({ ...prev, departmentId: e.target.value }))}
-                className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 text-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
-              >
-                <option value="">اختر القسم</option>
-                {club.departments.map((dept) => (
-                  <option key={dept.id} value={dept.id}>
-                    {dept.arabicName} - {dept.description}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* Personal Information */}
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-gray-800 font-semibold mb-2">
@@ -215,7 +172,7 @@ const ClubApplicationModal = ({ club, onClose }: ClubApplicationModalProps) => {
                   value={formData.fullName}
                   onChange={(e) => setFormData(prev => ({ ...prev, fullName: e.target.value }))}
                   className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
-                  placeholder="أدخل اسمك الكامل"
+                  placeholder="الاسم الكامل"
                 />
               </div>
 
@@ -226,11 +183,11 @@ const ClubApplicationModal = ({ club, onClose }: ClubApplicationModalProps) => {
                 <input
                   type="number"
                   required
-                  min="16"
-                  max="65"
+                  min="1"
+                  max="100"
                   value={formData.age}
                   onChange={(e) => setFormData(prev => ({ ...prev, age: e.target.value }))}
-                  className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
+                  className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 text-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
                   placeholder="العمر"
                 />
               </div>
@@ -247,7 +204,7 @@ const ClubApplicationModal = ({ club, onClose }: ClubApplicationModalProps) => {
                   value={formData.phone}
                   onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
                   className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
-                  placeholder="0555 123 456"
+                  placeholder="رقم الهاتف"
                 />
               </div>
 
@@ -260,7 +217,7 @@ const ClubApplicationModal = ({ club, onClose }: ClubApplicationModalProps) => {
                   value={formData.email}
                   onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
                   className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
-                  placeholder="example@email.com"
+                  placeholder="البريد الإلكتروني"
                 />
               </div>
             </div>
