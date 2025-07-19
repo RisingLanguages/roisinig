@@ -438,9 +438,7 @@ const TheOfficeApplications = ({ isAdmin }: { isAdmin: boolean }) => {
           </motion.div>
         </motion.div>
       )}
-      </div>
     </div>
-    </>
     </>
   );
 };
