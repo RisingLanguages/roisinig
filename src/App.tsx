@@ -15,6 +15,30 @@ function App() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
+  // Handle back button to return to home page
+  useEffect(() => {
+    const handlePopState = (e: PopStateEvent) => {
+      if (currentPage !== 'choice') {
+        e.preventDefault();
+        // Navigate back to home page
+        setCurrentPage('choice');
+        window.history.pushState({ page: 'choice' }, '', window.location.href);
+      }
+    };
+
+    // Add event listener for back button
+    window.addEventListener('popstate', handlePopState);
+
+    // Push current state to history when not on home page
+    if (currentPage !== 'choice') {
+      window.history.pushState({ page: currentPage }, '', window.location.href);
+    }
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [currentPage]);
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
@@ -37,20 +61,26 @@ function App() {
     if (type === 'admin') {
       if (user) {
         setCurrentPage('admin-dashboard');
+        window.history.pushState({ page: 'admin-dashboard' }, '', window.location.href);
       } else {
         setCurrentPage('admin-login');
+        window.history.pushState({ page: 'admin-login' }, '', window.location.href);
       }
     } else {
-      setCurrentPage(type === 'basic' ? 'basic-form' : 'full-form');
+      const newPage = type === 'basic' ? 'basic-form' : 'full-form';
+      setCurrentPage(newPage);
+      window.history.pushState({ page: newPage }, '', window.location.href);
     }
   };
 
   const handleBackToChoice = () => {
     setCurrentPage('choice');
+    window.history.pushState({ page: 'choice' }, '', window.location.href);
   };
 
   const handleAdminLoginSuccess = () => {
     setCurrentPage('admin-dashboard');
+    window.history.pushState({ page: 'admin-dashboard' }, '', window.location.href);
   };
 
   if (loading) {
